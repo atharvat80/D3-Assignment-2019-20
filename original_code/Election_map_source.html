@@ -97,8 +97,8 @@
              // load up data
 
                d3.queue()
-                .defer(d3.json, "wpc.json")
-                .defer(d3.csv, "mp_data.csv")
+                .defer(d3.json, "https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/wpc.json?token=AMFZ235OTO6G4QBI67QNVFC57DD66")
+                .defer(d3.csv, "https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/mp_data.csv?token=AMFZ23YOZGUROJ74SLIMDH257DECK")
                 .await(function(error, boundary_data, mp_data){
                     console.log(mp_data);
                     cons_data = mp_data;
