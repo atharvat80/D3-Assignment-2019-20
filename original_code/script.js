@@ -37,8 +37,8 @@ function init() {
      // load up data
 
        d3.queue()
-        .defer(d3.json, "https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/wpc.json?token=AMFZ235OTO6G4QBI67QNVFC57DD66")
-        .defer(d3.csv, "https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/mp_data.csv?token=AMFZ23YOZGUROJ74SLIMDH257DECK")
+        .defer(d3.json, "https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/original_code/wpc.json?token=AMFZ23YBSBHSRNOO3H2TGOK57DFOI")
+        .defer(d3.csv, "https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/original_code/mp_data.csv?token=AMFZ23YADQAGDXHKRSVNUS257DFMM")
         .await(function(error, boundary_data, mp_data){
             console.log(mp_data);
             cons_data = mp_data;
