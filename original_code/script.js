@@ -71,7 +71,7 @@ function init() {
           active.style("opacity", 1.0);
           active.style("stroke", "#000");
           active = d3.select(this);
-          active.style("opacity", 0.3)
+          active.style("opacity", 0.9)
           active.style("stroke", "#c0c0c0");
 
           // ??????
