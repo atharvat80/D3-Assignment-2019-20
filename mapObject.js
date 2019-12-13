@@ -110,7 +110,7 @@ map.handleZoom = function(){
     map.g.attr('transform', d3.event.transform);
 }
 
-// reset colour and hide information once the active constituency has been clicked again
+// Reset colour and hide information once the active constituency has been clicked again
 map.reset = function(){
     map.active.style("opacity", 1.0);
     map.active.style("stroke", "#000");
@@ -123,7 +123,4 @@ map.reset = function(){
 }
 
 
-map.init(
-    "https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/original_code/wpc.json?token=AMFZ23YBSBHSRNOO3H2TGOK57DFOI",
-    "https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/original_code/mp_data.csv?token=AMFZ23YADQAGDXHKRSVNUS257DFMM"
-);
+map.init("/original_code/wpc.json", "/original_code/mp_data.csv")
