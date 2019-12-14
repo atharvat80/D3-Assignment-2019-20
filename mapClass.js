@@ -1,56 +1,67 @@
 class map{
-    constructor(mapdataPath, datasetPath){
-        this.mapdataPath = mapdataPath;
-        this.datasetPath = datasetPath;
-        this.electionData;
-        this.width = document.getElementById("vis").clientWidth;
-        this.height = document.getElementById("vis").clientHeight;
-        this.svg;
-        this.g;
-        this.projection = d3.geoAlbers().rotate([0, 0]);
-        this.path = d3.geoPath().projection(this.projection);
-        this.active = d3.select(null);
-        this.zoom = d3.zoom().on("zoom", this.handleZoom);
+    constructor(){
+        this.mapData,
+        this.electionData,
+        this.width = document.getElementById("vis").clientWidth,
+        this.height = 0.9*document.getElementById("vis").clientHeight,
+        this.projection = d3.geoAlbers().rotate([0, 0]),
+        this.active = d3.select(null),
+        this.svg,
+        this.g,
+        this.path,
+        this.zoom
+    }
+    
+
+    // Zoom when double clicked
+    handleZoom(){
+        this.g.attr('transform', d3.event.transform);
+    }
+    
+    // Reset colour and hide information once the active constituency has been clicked again
+    reset(){
+        this.active.style("opacity", 1.0);
+        this.active.style("stroke", "#000");
+        this.active = d3.select(null)
+    
+        d3.select("#info")
+        .classed("active", false)
+        .style("top", height + "px")
+        .style("left", width + "px");
     }
 
-    // Process data from input files
-    init(){
-        //load data
-        d3.queue()
-        .defer(d3.json, this.mapdataPath)
-        .defer(d3.csv, this.datasetPath)
-        .await(this.ready)
+    
+    // change colour of the constituency when clicked
+    clicked(d){
+        if(this.active.node() === this) {
+            this.reset();
+            } else {
+            this.active.style("opacity", 1.0);
+            this.active.style("stroke", "#000");
+            this.active = d3.select(this);
+            this.active.style("opacity", 0.75)
+            this.active.style("stroke", "#c0c0c0");
         
-        this.svg = d3.select("#vis")
-          .append("svg")
-          .attr("width", this.width)
-          .attr("height", this.height);
-
-        this.g = this.svg.append("g");
-        
-        this.svg.call(this.zoom);
+            d3.select("#info")
+                .classed("active", true)
+                .style("top", "30px")
+                .style("left", "30px");
+            
+            this.displayInfo(d)
+        }
     }
-
-    // Draw map once data has been loaded
-    ready(error, country, electionData){
-        map.electionData = electionData;
-        console.log(map.electionData)
-        map.draw(country, map.electionData);
-    }
-
+    
+    
     // Draw map
-    draw(country){
+    draw(){
         this.projection.scale(1).translate([0,0]);
-        
-        var b = this.path.bounds(topojson.feature(country, country.objects["wpc"]));
-        var s = .95 / Math.max((b[1][0] - b[0][0])/this.width, (b[1][1] - b[0][1])/this.height);
-        var t = [(this.width - s * (b[1][0] + b[0][0]))/2, (this.height - s * (b[1][1] + b[0][1]))/2];
-        
+        let b = this.path.bounds(topojson.feature(this.mapData, this.mapData.objects["wpc"]));
+        let s = .95 / Math.max((b[1][0] - b[0][0])/this.width, (b[1][1] - b[0][1])/this.height);
+        let t = [(this.width - s * (b[1][0] + b[0][0]))/2, (this.height - s * (b[1][1] + b[0][1]))/2];
         this.projection.scale(s).translate(t);
-
+    
         // select
-        var areas = this.g.selectAll(".area")
-        .data(topojson.feature(country, country.objects["wpc"]).features);
+        let areas = this.g.selectAll(".area").data(topojson.feature(this.mapData, this.mapData.objects["wpc"]).features);
         
         // enter
         areas
@@ -67,30 +78,11 @@ class map{
             })
         .attr("id", function(d){ return d.properties.PC_ID; })
         .attr("d", this.path)
-        .on('click', self.clicked);
+        .on('click', this.clicked);
     }
 
 
-    clicked(d){
-        if(this.active.node() === this) {
-            this.reset();
-          } else {
-            this.active.style("opacity", 1.0);
-            this.active.style("stroke", "#000");
-            this.active = d3.select(this);
-            this.active.style("opacity", 0.75)
-            this.active.style("stroke", "#c0c0c0");
-        
-            d3.select("#info")
-                .classed("active", true)
-                .style("top", "30px")
-                .style("left", "30px");
-            
-            this.displayInfo(d)
-        }
-    }
-
-
+    // Display information about a constituency when clicked
     displayInfo(d){
         let partyName = '';
         let mpName = '';
@@ -110,25 +102,43 @@ class map{
     }
 
 
-    handleZoom(){
-        this.g.attr('transform', d3.event.transform);
+    // Draw map once data has been loaded
+    ready(error, mapData, electionData){
+        this.mapData = mapData;
+        this.electionData = electionData;
+        this.draw();
     }
 
 
-    reset(){
-        this.active.style("opacity", 1.0);
-        this.active.style("stroke", "#000");
-        this.active = d3.select(null)
-
-        d3.select("#info")
-        .classed("active", false)
-        .style("top", height + "px")
-        .style("left", width + "px");
+    // Process data from input files
+    init (error, mapData, electionData){
+        if (error != null){
+            alert(error);
+        }
+        else{
+            this.mapData = mapData;
+            this.electionData = electionData;
+        }
+        console.log(this.mapData);
+        console.log(this.electionData);
+        
+        this.path = d3.geoPath().projection(this.projection);
+        this.svg = d3.select("#vis")
+            .append("svg")
+            .attr("width", this.width)
+            .attr("height", this.height);
+    
+        this.g = this.svg.append("g");
+        this.zoom = d3.zoom().on("zoom", this.handleZoom),
+        this.svg.call(this.zoom);
     }
+    
+
 }
 
-let uk = new map(
-    "https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/original_code/wpc.json?token=AMFZ23YBSBHSRNOO3H2TGOK57DFOI",
-    "https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/original_code/mp_data.csv?token=AMFZ23YADQAGDXHKRSVNUS257DFMM"
-);
-uk.init();
+
+uk = new map();
+d3.queue()
+    .defer(d3.json, "/original_code/wpc.json")
+    .defer(d3.csv, "/original_code/mp_data.csv")
+    .await(uk.init);

@@ -77,7 +77,7 @@
 
   // use queue function to load map and results data asynchronously, then call ready function when done.
   queue()
-    .defer(d3.json, "https://s3-us-west-2.amazonaws.com/s.cdpn.io/535422/map.json")
+    .defer(d3.json, "https://s3-us-west-2.amazonaws.com/s.cdpn.io/535422/this.json")
     .defer(d3.json, "https://s3-us-west-2.amazonaws.com/s.cdpn.io/535422/election-data.json")
     .await(ready);
 
@@ -186,7 +186,7 @@
         }
       }); */
 
-    map.enter()
+    this.enter()
       .append("path")
       .attr("class", function(d, i) {
         var badge = "f0";
@@ -204,7 +204,7 @@
       .attr("d", path);
 
     //Show/hide tooltip
-    map.on("mousemove", function(d, i) {
+    this.on("mousemove", function(d, i) {
         tooltip.style("opacity", 1);
         if (constituency[d.properties.id - 1].winner != "0") {
           d3.select(".charty").style("opacity", 1).style("height", "auto");
@@ -386,16 +386,16 @@
 
   /* this code automatically resizes the content according to the viewport dimensions. It has been commented out for Codepen, but can be used elsewhere.
   var resizeMap = $("#sizer-map"),
-    aspectMap = resizeMap.width() / resizeMap.height(),
-    containerResizeMap = resizeMap.parent(),
+    aspectMap = resizethis.width() / resizethis.height(),
+    containerResizeMap = resizethis.parent(),
     resizeLegend = $("#sizer-legend"),
     aspectLegend = resizeLegend.width() / resizeLegend.height(),
     containerResizeLegend = $("#electionLegend");
 
   $(window).on("resize", function() {
-    var targetContainerResizeMapWidth = containerResizeMap.width();
-    resizeMap.attr("width", targetContainerResizeMapWidth);
-    resizeMap.attr("height", Math.round(targetContainerResizeMapWidth / aspectMap));
+    var targetContainerResizeMapWidth = containerResizethis.width();
+    resizethis.attr("width", targetContainerResizeMapWidth);
+    resizethis.attr("height", Math.round(targetContainerResizeMapWidth / aspectMap));
     var targetContainerResizeLegendWidth = containerResizeLegend.width();
     resizeLegend.attr("width", targetContainerResizeLegendWidth);
     resizeLegend.attr("height", Math.round(targetContainerResizeLegendWidth / aspectLegend));

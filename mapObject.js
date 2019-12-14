@@ -9,13 +9,13 @@ let map = {
 // Process data from input files
 map.init = function(mapdataPath, datasetPath){
     map.path = d3.geoPath().projection(map.projection)
-    
+
     //load data
     d3.queue()
-    .defer(d3.json, mapdataPath)
-    .defer(d3.csv, datasetPath)
-    .await(map.ready)
-    
+        .defer(d3.json, mapdataPath)
+        .defer(d3.csv, datasetPath)
+        .await(map.ready)
+
     map.svg = d3.select("#vis")
         .append("svg")
         .attr("width", this.width)
@@ -23,7 +23,7 @@ map.init = function(mapdataPath, datasetPath){
 
     map.g = map.svg.append("g");
     map.zoom = d3.zoom().on("zoom", map.handleZoom),
-    map.svg.call(map.zoom);
+        map.svg.call(map.zoom);
 }
 
 
@@ -44,23 +44,23 @@ map.draw = function(country){
 
     // select
     let areas = map.g.selectAll(".area").data(topojson.feature(country, country.objects["wpc"]).features);
-    
+
     // enter
     areas
-    .enter()
-    .append('path')
-    .attr("class", 'area')
-    .attr("fill", function(d){
-        for(var i = 0; i < map.electionData.length; i++) {
-            if( map.electionData[i].PC_ID === d.properties.PC_ID ) {
-                return map.electionData[i].Colour;
+        .enter()
+        .append('path')
+        .attr("class", 'area')
+        .attr("fill", function(d){
+            for(var i = 0; i < map.electionData.length; i++) {
+                if( map.electionData[i].PC_ID === d.properties.PC_ID ) {
+                    return map.electionData[i].Colour;
                 }
             }
-        return "#ffffff";
+            return "#ffffff";
         })
-    .attr("id", function(d){ return d.properties.PC_ID; })
-    .attr("d", map.path)
-    .on('click', map.clicked);
+        .attr("id", function(d){ return d.properties.PC_ID; })
+        .attr("d", map.path)
+        .on('click', map.clicked);
 }
 
 
@@ -68,18 +68,18 @@ map.draw = function(country){
 map.clicked = function(d){
     if(map.active.node() === this) {
         map.reset();
-        } else {
+    } else {
         map.active.style("opacity", 1.0);
         map.active.style("stroke", "#000");
         map.active = d3.select(this);
         map.active.style("opacity", 0.75)
         map.active.style("stroke", "#c0c0c0");
-    
+
         d3.select("#info")
             .classed("active", true)
             .style("top", "30px")
             .style("left", "30px");
-        
+
         map.displayInfo(d)
     }
 }
@@ -110,17 +110,17 @@ map.handleZoom = function(){
     map.g.attr('transform', d3.event.transform);
 }
 
-// Reset colour and hide information once the active constituency has been clicked again
+// reset colour and hide information once the active constituency has been clicked again
 map.reset = function(){
     map.active.style("opacity", 1.0);
     map.active.style("stroke", "#000");
     map.active = d3.select(null)
 
     d3.select("#info")
-    .classed("active", false)
-    .style("top", height + "px")
-    .style("left", width + "px");
+        .classed("active", false)
+        .style("top", height + "px")
+        .style("left", width + "px");
 }
 
 
-map.init("/original_code/wpc.json", "/original_code/mp_data.csv")
+map.init("/original_code/wpc.json","/original_code/mp_data.csv");
