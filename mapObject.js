@@ -23,7 +23,7 @@ map.init = function(mapdataPath, datasetPath){
 
     map.g = map.svg.append("g");
     map.zoom = d3.zoom().on("zoom", map.handleZoom),
-        map.svg.call(map.zoom);
+    map.svg.call(map.zoom);
 }
 
 
