@@ -1,0 +1,31 @@
+html, body, #vis {
+  margin: 0px;
+  padding: 0px;
+  height: 100%;
+  width: 100%;
+  background-color: #eeeeee;
+  position: relative;
+  font-family: 'Open Sans', sans-serif;
+}
+
+p{
+  font-size: small;
+}
+
+.area {
+  stroke: #000;
+  stroke-width: 0.1px;
+}
+
+#info {
+  padding: 20px;
+  position: absolute;
+  visibility: hidden;
+  z-index: 10;
+}
+
+#info.active {
+  visibility: visible;
+  background-color: white;
+  opacity: 0.95;
+}
