@@ -22,7 +22,7 @@ map.init = function(mapdataPath, datasetPath){
         .attr("height", this.height);
 
     map.g = map.svg.append("g");
-    map.zoom = d3.zoom().on("zoom", map.handleZoom),
+    map.zoom = d3.zoom().on("zoom", map.handleZoom);
     map.svg.call(map.zoom);
 }
 
@@ -68,7 +68,8 @@ map.draw = function(country){
 map.clicked = function(d){
     if(map.active.node() === this) {
         map.reset();
-    } else {
+    } 
+    else {
         map.active.style("opacity", 1.0);
         map.active.style("stroke", "#000");
         map.active = d3.select(this);
@@ -118,8 +119,8 @@ map.reset = function(){
 
     d3.select("#info")
         .classed("active", false)
-        .style("top", height + "px")
-        .style("left", width + "px");
+        .style("top", map.height + "px")
+        .style("left", map.width + "px");
 }
 
 

@@ -5,15 +5,16 @@ class map{
         this.width = document.getElementById("vis").clientWidth,
         this.height = 0.9*document.getElementById("vis").clientHeight,
         this.projection = d3.geoAlbers().rotate([0, 0]),
-        this.active,
+        this.active = d3.select(null),
         this.svg,
         this.g,
         this.path,
-        this.zoom
+        this.zoom,
+        this.colours
     }
     
     // Process data from input files
-    init (error, mapData, electionData){
+    init (error, mapData, electionData, colours){
         this.path = d3.geoPath().projection(this.projection);
         this.svg = d3.select("#vis")
             .append("svg")
@@ -22,10 +23,10 @@ class map{
         this.g = this.svg.append("g");
         this.mapData = mapData;
         this.electionData = electionData;
-        this.active = d3.select(null);
+        this.colours = colours;
         this.draw();
-        //this.zoom = d3.zoom().on("zoom", this.handleZoom());
-        //this.svg.call(this.zoom);
+        this.zoom = d3.zoom().on("zoom", this.zoomed.bind(this))
+        this.svg.call(this.zoom)
     }
     
     // Draw map
@@ -35,70 +36,54 @@ class map{
         let s = .95 / Math.max((b[1][0] - b[0][0])/this.width, (b[1][1] - b[0][1])/this.height);
         let t = [(this.width - s * (b[1][0] + b[0][0]))/2, (this.height - s * (b[1][1] + b[0][1]))/2];
         this.projection.scale(s).translate(t);
-
-        let _this = this;
     
         // select
-        let areas = this.g.selectAll(".area").data(topojson.feature(this.mapData, this.mapData.objects["wpc"]).features);
+        this.areas = this.g.selectAll(".area").data(topojson.feature(this.mapData, this.mapData.objects["wpc"]).features);
         
         // enter
-        areas
+        this.areas
         .enter()
         .append('path')
         .attr("class", 'area')
-        .attr("fill", function (d){
-            for(var i = 0; i < _this.electionData.length; i++) {
-                if( _this.electionData[i].PC_ID === d.properties.PC_ID ) {
-                    return _this.electionData[i].Colour;
-                    }
-                }
-            return "#ffffff";  
-        })
+        .attr("fill", this.fillColour.bind(this))
         .attr("id", function(d){ return d.properties.PC_ID; })
         .attr("d", this.path)
-        .on('click', function(d){
-            if(_this.active.node() === this) {
-                this.reset();
-                } 
-            else {
-                _this.active.style("opacity", 1.0);
-                _this.active.style("stroke", "#000");
-                _this.active = d3.select(this);
-                _this.active.style("opacity", 0.75)
-                _this.active.style("stroke", "#c0c0c0");
-            
-                d3.select("#info")
-                    .classed("active", true)
-                    .style("top", "30px")
-                    .style("left", "30px");
-                
-                _this.displayInfo(d)
-            }
-        });
+        .on('click', this.clicked.bind(this));
     }
 
-    // change colour of the constituency when clicked
+    // change colour of the constituency when clicked oe unclicked
     clicked(d){
-        if(this.active.node() === this) {
-            this.reset();
-            } else {
+        let activeNode = String("#"+d.properties["PC_ID"]);
+        if (this.active.node() === d3.select(activeNode).node()){
+            this.resetActive();
+        }
+        else if(this.active.node() != null){
             this.active.style("opacity", 1.0);
             this.active.style("stroke", "#000");
-            this.active = d3.select(this);
+            this.resetActive();
+        }
+        else{
+            this.active = d3.select(activeNode);
             this.active.style("opacity", 0.75)
             this.active.style("stroke", "#c0c0c0");
-        
+
             d3.select("#info")
-                .classed("active", true)
-                .style("top", "30px")
-                .style("left", "30px");
-            
+            .classed("active", true)
+            .style("top", "30px")
+            .style("left", "30px");
+
             this.displayInfo(d)
         }
     }
 
+
     // Display information about a constituency when clicked
     displayInfo(d){
+        d3.select("#info")
+            .classed("active", true)
+            .style("top", "30px")
+            .style("left", "30px");
+        
         let partyName = '';
         let mpName = '';
         let conName= '';
@@ -116,32 +101,41 @@ class map{
         d3.select("#mp_name").text(mpName);
     }
 
-    // Zoom when double clicked
-    handleZoom(){
-        this.g.attr('transform', d3.event.transform);
+    fillColour(d){
+        for(var i = 0; i < this.electionData.length; i++) {
+            if( this.electionData[i].PC_ID === d.properties.PC_ID ) {
+                return this.colours[this.electionData[i]['Party']];
+                }
+            }
+        return "#ffffff";  
     }
     
+    zoomed(){
+        this.g.attr("transform", d3.event.transform);
+    }
+
     // Reset colour and hide information once the active constituency has been clicked again
-    reset(){
+    resetActive(){
         this.active.style("opacity", 1.0);
         this.active.style("stroke", "#000");
-        this.active = d3.select(null)
-    
+        this.active = d3.select(null);
+
         d3.select("#info")
         .classed("active", false)
-        .style("top", height + "px")
-        .style("left", width + "px");
+        .style("top", this.height + "px")
+        .style("left", this.width + "px");
     }
 }
 
 
 uk = new map();
 
-async function setData(error, mapData, electionData){
-    uk.init(error, mapData, electionData)
+async function setData(error, mapData, electionData, colours){
+    uk.init(error, mapData, electionData, colours);
     }
 
 d3.queue()
         .defer(d3.json, "/original_code/wpc.json")
         .defer(d3.csv, "/original_code/mp_data.csv")
+        .defer(d3.json, "colours.json")
         .await(setData);

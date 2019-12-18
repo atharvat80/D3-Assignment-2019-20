@@ -79,6 +79,7 @@ function draw(wpcs, cons_data) {
 
 // mouse scroll wheel, pinch and double click zoom 
 function handle_zoom() {
+  console.log(d3.event);
   g.attr('transform', d3.event.transform);
  }
 

@@ -1,21 +1,16 @@
 html, body, #vis {
-
   margin: 0px;
   padding: 0px;
-
   height: 100%;
   width: 100%;
-
-  background-color: white;
-
+  background-color: #eeeeee;
   position: relative;
-
   font-family: 'Open Sans', sans-serif;
 }
 
 .area {
   stroke: #000;
-  stroke-width: 0.1px;
+  stroke-width: 0.2px;
 }
 
 #info {
@@ -30,20 +25,3 @@ html, body, #vis {
   background-color:gray;
   opacity: 0.9;
 }
-
-/* cyrillic-ext */
-@font-face {
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 300;
-    src: local('Open Sans Light'), local('OpenSans-Light'), url(http://fonts.gstatic.com/s/opensans/v15/mem5YaGs126MiZpBA-UN_r8OX-hpKKSTj5PW.woff2) format('woff2');
-    unicode-range: U+0460-052F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F;
-  }
-  /* cyrillic */
-  @font-face {
-    font-family: 'Open Sans';
-    font-style: normal;
-    font-weight: 300;
-    src: local('Open Sans Light'), local('OpenSans-Light'), url(http://fonts.gstatic.com/s/opensans/v15/mem5YaGs126MiZpBA-UN_r8OVuhpKKSTj5PW.woff2) format('woff2');
-    unicode-range: U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-  }
