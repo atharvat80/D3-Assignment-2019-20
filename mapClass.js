@@ -14,21 +14,51 @@ class map{
     }
     
     // Process data from input files
-    init (error, mapData, electionData, colours){
+    init (mapPath, dataPath, fill){
+        
+        // Initialise variables required to draw the map
         this.path = d3.geoPath().projection(this.projection);
         this.svg = d3.select("#vis")
             .append("svg")
             .attr("width", this.width)
             .attr("height", this.height);
         this.g = this.svg.append("g");
-        this.mapData = mapData;
-        this.electionData = electionData;
-        this.colours = colours;
-        this.draw();
+        
+        // Get data of required to draw the map
+        this.getData(mapPath, dataPath, fill)
+        
+        // Initialise variables and methods required to interact with the map
         this.zoom = d3.zoom().on("zoom", this.zoomed.bind(this))
         this.svg.call(this.zoom)
     }
+
+    //Get data required for the visualisation
+    getData(mapPath, dataPath, fill){
+        d3.queue()
+            .defer(d3.json, mapPath)
+            .defer(d3.csv, dataPath)
+            .defer(d3.json, fill)
+            .await(this.ready.bind(this))
+    }
+
+    // Handle zoom function
+    zoomed(){
+        this.g.attr("transform", d3.event.transform);
+    }
     
+    // Draw the map or show error occurred while loading the data 
+    ready(error, mapData, electionData, colours){
+        if (error != null){
+            alert(error)
+        }
+        else{
+            this.mapData = mapData;
+            this.electionData = electionData;
+            this.colours = colours;
+            this.draw();
+        }
+    }
+
     // Draw map
     draw(){
         this.projection.scale(1).translate([0,0]);
@@ -42,13 +72,13 @@ class map{
         
         // enter
         this.areas
-        .enter()
-        .append('path')
-        .attr("class", 'area')
-        .attr("fill", this.fillColour.bind(this))
-        .attr("id", function(d){ return d.properties.PC_ID; })
-        .attr("d", this.path)
-        .on('click', this.clicked.bind(this));
+            .enter()
+            .append('path')
+            .attr("class", 'area')
+            .attr("fill", this.fillColour.bind(this))
+            .attr("id", function(d){ return d.properties.PC_ID; })
+            .attr("d", this.path)
+            .on('click', this.clicked.bind(this));
     }
 
     // change colour of the constituency when clicked oe unclicked
@@ -101,6 +131,7 @@ class map{
         d3.select("#mp_name").text(mpName);
     }
 
+    // return the colour the constituency should be filled with
     fillColour(d){
         for(var i = 0; i < this.electionData.length; i++) {
             if( this.electionData[i].PC_ID === d.properties.PC_ID ) {
@@ -108,10 +139,6 @@ class map{
                 }
             }
         return "#ffffff";  
-    }
-    
-    zoomed(){
-        this.g.attr("transform", d3.event.transform);
     }
 
     // Reset colour and hide information once the active constituency has been clicked again
@@ -129,13 +156,4 @@ class map{
 
 
 uk = new map();
-
-async function setData(error, mapData, electionData, colours){
-    uk.init(error, mapData, electionData, colours);
-    }
-
-d3.queue()
-        .defer(d3.json, "/original_code/wpc.json")
-        .defer(d3.csv, "/original_code/mp_data.csv")
-        .defer(d3.json, "colours.json")
-        .await(setData);
+uk.init("/source/wpc.json","/source/mp_data.csv", "colours.json");

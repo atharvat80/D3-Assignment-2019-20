@@ -22,6 +22,6 @@ html, body, #vis {
 
 #info.active {
   visibility: visible;
-  background-color:gray;
-  opacity: 0.9;
+  background-color: white;
+  opacity: 0.95;
 }
