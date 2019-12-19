@@ -52,7 +52,7 @@ class map{
     // Draw the map or show error occurred while loading the data 
     ready(error, mapData, electionData, colours){
         if (error != null){
-            alert(error)
+            alert("This error occurred while reading the data files: "+error)
         }
         else{
             this.mapData = mapData;
