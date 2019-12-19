@@ -85,6 +85,7 @@ class map{
             .on('click', this.clicked.bind(this));
     }
 
+
     // change colour of the constituency when clicked or unclicked
     clicked(d){
         let activeNode = "#"+d.properties.NAME_2;
@@ -157,12 +158,12 @@ function removePrevious(){
 
 function round1(){
     removePrevious()
-    france.init("departements2.json","round1.csv", "colours.json");
+    france.init("departements.json","round1.csv", "colours.json");
 }
 
 function round2(){
     removePrevious()
-    france.init("departements2.json","round2.csv", "colours.json");
+    france.init("departements.json","round2.csv", "colours.json");
 }
 
 document.addEventListener("DOMContentLoaded", function(){
