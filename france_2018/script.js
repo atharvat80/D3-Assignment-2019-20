@@ -2,8 +2,8 @@ class map{
     constructor(){
         this.mapData,
         this.electionData,
-        this.width = document.getElementById("vis").clientWidth,
-        this.height = 0.9*document.getElementById("vis").clientHeight,
+        this.width,
+        this.height,
         this.projection = d3.geoAlbers().rotate([0, 0]),
         this.active = d3.select(null),
         this.svg,
@@ -17,8 +17,11 @@ class map{
     init (mapPath, dataPath, fill){
         
         // Initialise variables required to draw the map
+        this.width = document.getElementById('vis').clientWidth,
+        this.height = document.getElementById('vis').clientHeight,
         this.path = d3.geoPath().projection(this.projection);
-        this.svg = d3.select("#vis")
+        
+        this.svg = d3.select('#vis')
             .append("svg")
             .attr("width", this.width)
             .attr("height", this.height);
@@ -57,8 +60,6 @@ class map{
             this.colours = colours;
             this.draw();
         }
-        console.log(this.mapData);
-        console.log(this.electionData);
     }
 
     // Draw map
@@ -86,24 +87,20 @@ class map{
 
     // change colour of the constituency when clicked or unclicked
     clicked(d){
-        let activeNode = String("#"+d.properties.NAME_2);
+        let activeNode = "#"+d.properties.NAME_2;
         if (this.active.node() === d3.select(activeNode).node()){
             this.resetActive();
         }
         else if(this.active.node() != null){
-            this.active.style("opacity", 1.0);
-            this.active.style("stroke", "#000000");
             this.resetActive();
         }
         else{
             this.active = d3.select(activeNode);
             this.active.style("opacity", 0.5)
-            this.active.style("stroke", "#FF0000");
-
-            d3.select("#info")
-            .classed("active", true)
-            .style("top", "30px")
-            .style("left", "30px");
+            this.active.style("stroke", "#e7e7e7");
+            
+            d3.select("#departement").style("visibility", "visible");
+            d3.select("#result").style("visibility", "visible");
 
             this.displayInfo(d)
         }
@@ -111,12 +108,7 @@ class map{
 
 
     // Display information about a constituency when clicked
-    displayInfo(d){
-        d3.select("#info")
-            .classed("active", true)
-            .style("top", "50px")
-            .style("left", "50px");
-        
+    displayInfo(d){        
         let partyName = '';
         let mpName = '';
         let conName= '';
@@ -128,17 +120,15 @@ class map{
                 conName= this.electionData[i].departement;
             }
         }
-    
+        let result = "Won by "+partyName+" party candidate "+mpName;
         d3.select("#departement").text(conName);
-        d3.select("#party").text(partyName);
-        d3.select("#candidate").text(mpName);
+        d3.select("#result").text(result);
     }
 
     // return the colour the constituency should be filled with
     fillColour(d){
         for(var i = 0; i < this.electionData.length; i++) {
             if( this.electionData[i].departement === d.properties.NAME_2 ) {
-                console.log(this.colours[this.electionData[i]['candidate']]);
                 return this.colours[this.electionData[i]['candidate']];
                 }
             }
@@ -148,18 +138,38 @@ class map{
     // // Reset colour and hide information once the active constituency has been clicked again
     resetActive(){
         this.active.style("opacity", 1.0);
-        this.active.style("stroke", "#000000");
+        this.active.style("stroke", "#E7E7E7");
         this.active = d3.select(null);
 
-        d3.select("#info")
-        .classed("active", false)
-        .style("top", this.height + "px")
-        .style("left", this.width + "px");
+        d3.select("#departement").style("visibility", "hidden");
+        d3.select("#result").style("visibility", "hidden");
     }
 }
 
-
 france = new map();
-france.init("departements2.json","round2.csv", "colours.json");
+
+function removePrevious(){
+    var current = d3.select("svg").empty();
+    if (current === false){
+        d3.select('svg').remove()
+    }
+}
+
+function round1(){
+    removePrevious()
+    france.init("departements2.json","round1.csv", "colours.json");
+}
+
+function round2(){
+    removePrevious()
+    france.init("departements2.json","round2.csv", "colours.json");
+}
+
+document.addEventListener("DOMContentLoaded", function(){
+    var button1 = document.getElementById("round1");
+    var button2 = document.getElementById("round2");
+    button1.addEventListener("click", round1);
+    button2.addEventListener("click", round2);
+    });
 
 //source https://geo.nyu.edu/catalog/stanford-fs569ct0668

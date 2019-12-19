@@ -9,16 +9,26 @@
     <link href="stylesheet.css" rel="stylesheet" type="text/css">
 
 </head>
-<body data-gr-c-s-loaded="true">
-    <h2 style="text-align:center; margin-bottom: 5px">French Presidential Election 2017 Round 2 Results</h2>
-    <div id="vis" margin: auto>
+<body>
+    <div class="topnav">
+        <a class="passive">French Presidential results of 2017 by departements</a>
+        <a>Documentation</a>
+        <a href="https://github.com/atharvat80/D3_Assignment">Source</a>
+    </div> 
 
-  </div>
-
-    <div id="info">
-        <h3 id="departement"></h3>
-        <p> Won by <span id="party"></span> party candidate <span id="candidate"></span></p>
+    <div class="sidenav">
+        <p class="notice">About: to do</p>
+        <hr>
+        <p class="notice">Choose which round of the election to visualise and then click on a departement to view results</p>
+        <button id="round1" class="buttons">Round 1</button>
+        <button id="round2">Round 2</button>
+        <hr>
+        
+        <h3 id="departement" class="info"></h3>
+        <p id="result" class="info"></p>
+    
     </div>
+    <div id="vis" class="content"></div>
 
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script src="https://d3js.org/d3-queue.v3.min.js"></script>
