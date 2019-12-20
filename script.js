@@ -33,7 +33,9 @@ class map{
         this.g,
         this.path,
         this.zoom,
-        this.colours
+        this.colours,
+        this.name1,
+        this.name2
     }
 
     /**
@@ -61,7 +63,9 @@ class map{
      * @param {string} elementID - ID of the element that the svg of visualisation will be appended to
      * @description to do
      */
-    init (mapPath, dataPath, colours, elementID){
+    init (mapPath, dataPath, colours, elementID, name1, name2){
+        this.name1 = name1;
+        this.name2 = name2;
         this.width = document.getElementById(elementID).clientWidth,
         this.height = document.getElementById(elementID).clientHeight,
         this.path = d3.geoPath().projection(this.projection);
@@ -114,20 +118,19 @@ class map{
      * @description to do
      */
     draw(){
-        let objectName = "FRA_adm2-1";
         this.projection.scale(1).translate([0,0]);
-        let b = this.path.bounds(topojson.feature(this.mapData, this.mapData.objects[objectName]));
+        let b = this.path.bounds(topojson.feature(this.mapData, this.mapData.objects[this.name1]));
         let s = .95 / Math.max((b[1][0] - b[0][0])/this.width, (b[1][1] - b[0][1])/this.height);
         let t = [(this.width - s * (b[1][0] + b[0][0]))/2, (this.height - s * (b[1][1] + b[0][1]))/2];
         this.projection.scale(s).translate(t);
     
-        let areas = this.g.selectAll(".area").data(topojson.feature(this.mapData, this.mapData.objects[objectName]).features);
+        let areas = this.g.selectAll(".area").data(topojson.feature(this.mapData, this.mapData.objects[this.name1]).features);
         
         areas.enter()
             .append('path')
             .attr("class", 'area')
             .attr("fill", this.fillColour.bind(this))
-            .attr("id", function(d){ return d.properties.NAME_2; })
+            .attr("id", function(d){ return d.properties[this.name2] })
             .attr("d", this.path)
             .on('click', this.clicked.bind(this));
     }
@@ -136,7 +139,7 @@ class map{
      * @description to do
      */
     clicked(d){
-        let activeNode = d.properties.NAME_2;
+        let activeNode = d["properties"][this.name2];
         if (this.active.node() === d3.select("#"+activeNode)){
             this.resetActive();
         }
@@ -183,7 +186,7 @@ class map{
      */
     fillColour(d){
         for(var i = 0; i < this.electionData.length; i++) {
-            if( this.electionData[i].departement === d.properties.NAME_2 ) {
+            if( this.electionData[i].departement === d.properties[this.name2] ) {
                 return this.colours[this.electionData[i]['candidate']];
                 }
             }
@@ -217,7 +220,10 @@ function round1(){
     france.init(
         "france_2017/departements.json",
         "france_2017/round1.csv", 
-        "france_2017/colours.json", "vis"
+        "france_2017/colours.json", 
+        "vis",
+        "FRA_adm2-1",
+        "NAME_2"
         );
 }
 
@@ -227,7 +233,10 @@ function round2(){
     france.init(
         "france_2017/departements.json",
         "france_2017/round2.csv",
-        "france_2017/colours.json", "vis"
+        "france_2017/colours.json", 
+        "vis",
+        "FRA_adm2-1",
+        "NAME_2"
         );
 }
 
