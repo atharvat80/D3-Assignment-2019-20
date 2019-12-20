@@ -17,16 +17,21 @@
     </div> 
 
     <div class="sidenav">
-        <p class="notice">Author: Atharva Tidke <br>Election data source: <a href="https://en.wikipedia.org/wiki/2017_French_presidential_election#By_department">Wikipedia</a><br>France shapefile source: <a href="https://geo.nyu.edu/catalog/stanford-fs569ct0668">NYU Spatial Data Repository</a></p><hr>
-        <p class="notice">Choose which round of the election to visualise and then click on a departement to view the results</p>
+        <p class="notice" style="text-align: center; font-weight: bold;">How to use this visualisation</p>
+        <hr>
+        <p class="notice">Choose which round of the election to visualise using the buttons below. Clicking on a department  shows the results.</p>
         <button id="round1" class="buttons">Round 1</button>
-        <button id="round2">Round 2</button><hr>
-        <p class="notice" style="text-align: center;">Additional information</p><hr>
+        <button id="round2">Round 2</button>
+        <p class="notice">Note: Some french territories not close to mainland France will be omitted from the visualisation due to lack of a suitable shapefile</p>
+        <hr>
+        <p class="notice" style="text-align: center; font-weight: bold;">About</p>
+        <hr>
+        <p class="notice">Author: Atharva Tidke <br>Election data source: <a href="https://en.wikipedia.org/wiki/2017_French_presidential_election#By_department">Wikipedia</a><br>France shapefile source: <a href="https://geo.nyu.edu/catalog/stanford-fs569ct0668">NYU Spatial Data Repository</a></p>
+        <hr>
+        <p class="notice" style="text-align: center; font-weight: bold">Results</p>
+        <hr>
         <h3 id="departement" class="info"></h3>
         <p id="result" class="info"></p>
-        <hr>
-        <p class="notice">Please note:<br>Some french territories not close to mainland France have been omitted from the visualisation due to lack of a suitable shapefile</p>
-    
     </div>
     <div id="vis" class="content"></div>
 
