@@ -2,7 +2,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <html lang="en-gb">
 <head>
-    <title>French Presidential Election Results</title>
+    <title>2017 French Presidential Election Results</title>
 
     <!-- Mobile views -->
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
@@ -11,25 +11,28 @@
 </head>
 <body>
     <div class="topnav">
-        <a class="passive">French Presidential Election Results of 2017 by Departements</a>
+        <a class="passive"> 2017 French Presidential Election Results by Departements</a>
         <a href="/out/index.html">Documentation</a>
         <a href="https://github.com/atharvat80/D3_Assignment">Source</a>
     </div> 
 
     <div class="sidenav">
-        <p class="notice" style="text-align: center; font-weight: bold;">How to use this visualisation</p>
-        <hr>
-        <p class="notice">Choose which round of the election to visualise using the buttons below. Clicking on a department  shows the results.</p>
+        <p style="text-align: center; font-weight: bold;">How to use this visualisation</p><hr>
+        <ul>
+            <li>Choose which round of the election to visualise using the buttons below</li>
+            <li>Clicking on a department  shows the results</li>
+            <li>Some french territories not close to mainland France will be omitted from the visualisation due to lack of a suitable shapefile</li>
+        </ul>
         <button id="round1" class="buttons">Round 1</button>
         <button id="round2">Round 2</button>
-        <p class="notice">Note: Some french territories not close to mainland France will be omitted from the visualisation due to lack of a suitable shapefile</p>
-        <hr>
-        <p class="notice" style="text-align: center; font-weight: bold;">About</p>
-        <hr>
-        <p class="notice">Author: Atharva Tidke <br>Election data source: <a href="https://en.wikipedia.org/wiki/2017_French_presidential_election#By_department">Wikipedia</a><br>France shapefile source: <a href="https://geo.nyu.edu/catalog/stanford-fs569ct0668">NYU Spatial Data Repository</a></p>
-        <hr>
-        <p class="notice" style="text-align: center; font-weight: bold">Results</p>
-        <hr>
+        
+        <hr><p style="text-align: center; font-weight: bold;">About</p><hr>
+        <ul>
+            <li>Author: Atharva Tidke</li>
+            <li>Election data source: <a href="https://en.wikipedia.org/wiki/2017_French_presidential_election#By_department">Wikipedia</a></li>
+            <li>France shapefile source: <a href="https://geo.nyu.edu/catalog/stanford-fs569ct0668">NYU Spatial Data Repository</a></li>
+        </ul>
+        <hr><p style="text-align: center; font-weight: bold">Results</p><hr>
         <h3 id="departement" class="info"></h3>
         <p id="result" class="info"></p>
     </div>

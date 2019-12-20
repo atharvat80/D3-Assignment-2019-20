@@ -8,10 +8,6 @@ html, body {
   font-family: 'Open Sans', sans-serif;
 }
 
-p{
-  font-size: small;
-}
-
 hr {
   display: block;
   height: 1px;
@@ -21,7 +17,20 @@ hr {
   padding: 0;
 }
 
-svg{
+p {
+  font-size: small;
+  margin-left: 20px;
+  margin-right: 20px;
+  cursor: default;
+}
+
+ul {
+  font-size: small;
+  list-style-type: disc;
+  margin-right: 20px;
+}
+
+g{
   cursor: pointer;
 }
 
@@ -40,25 +49,6 @@ button{
 .area {
   stroke: #e7e7e7;
   stroke-width: 0.5px;
-}
-
-.sidenav {
-  float:left;
-  height: 91%;
-  width: 18%;
-  background-color: #e7e7e7;
-  margin-top: 1%;
-  margin-left: 1%;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  overflow-x: hidden;
-}
-
-.notice{
-  margin-left: 20px;
-  margin-right: 20px;
-  cursor: default;
 }
 
 .buttons{
@@ -96,4 +86,17 @@ button{
   float:left;
   background-color: #333;
   cursor: default; 
+}
+
+.sidenav {
+  float:left;
+  height: 91%;
+  width: 18%;
+  background-color: #e7e7e7;
+  margin-top: 1%;
+  margin-left: 1%;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  overflow-x: hidden;
 }
