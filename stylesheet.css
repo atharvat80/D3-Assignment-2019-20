@@ -25,10 +25,6 @@ svg{
   cursor: pointer;
 }
 
-svg:active{
-  cursor: grab;
-}
-
 button{
   cursor: pointer;
 }
