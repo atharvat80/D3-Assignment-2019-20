@@ -149,11 +149,11 @@ class map{
 france = new map();
 
 function round1(){
-    france.init("departements.json","round1.csv", "colours.json", "vis");
+    france.init("france_2017/departements.json","france_2017/round1.csv", "france_2017/colours.json", "vis");
 }
 
 function round2(){
-    france.init("departements.json","round2.csv", "colours.json", "vis");
+    france.init("france_2017/departements.json","france_2017/round2.csv", "france_2017/colours.json", "vis");
 }
 
 document.addEventListener("DOMContentLoaded", function(){
