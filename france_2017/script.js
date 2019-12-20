@@ -12,30 +12,34 @@ class map{
         this.zoom,
         this.colours
     }
+
+
+    removePrevious(){
+        var current = d3.select("svg").empty();
+        if (current === false){
+            d3.select('svg').remove();
+        }
+    }
     
-    // Process data from input files
-    init (mapPath, dataPath, fill){
-        
-        // Initialise variables required to draw the map
-        this.width = document.getElementById('vis').clientWidth,
-        this.height = document.getElementById('vis').clientHeight,
+
+    init (mapPath, dataPath, fill, element){
+        this.removePrevious();
+        this.width = document.getElementById(element).clientWidth,
+        this.height = document.getElementById(element).clientHeight,
         this.path = d3.geoPath().projection(this.projection);
         
-        this.svg = d3.select('#vis')
+        this.svg = d3.select('#'+element)
             .append("svg")
             .attr("width", this.width)
             .attr("height", this.height);
+        
         this.g = this.svg.append("g");
-        
-        // Get data of required to draw the map
-        this.getData(mapPath, dataPath, fill)
-        
-        // Initialise variables and methods required to interact with the map
-        this.zoom = d3.zoom().on("zoom", this.zoomed.bind(this))
-        this.svg.call(this.zoom)
+        this.getData(mapPath, dataPath, fill);
+        this.zoom = d3.zoom().on("zoom", this.zoomed.bind(this));
+        this.svg.call(this.zoom);
     }
 
-    //Get data required for the visualisation
+
     getData(mapPath, dataPath, fill){
         d3.queue()
             .defer(d3.json, mapPath)
@@ -44,12 +48,12 @@ class map{
             .await(this.ready.bind(this))
     }
 
-    // Handle zoom function
+
     zoomed(){
         this.g.attr("transform", d3.event.transform);
     }
     
-    // Draw the map or show error occurred while loading the data 
+    
     ready(error, mapData, electionData, colours){
         if (error != null){
             alert("This error occurred while reading the data files: "+error)
@@ -62,7 +66,7 @@ class map{
         }
     }
 
-    // Draw map
+
     draw(){
         let objectName = "FRA_adm2-1";
         this.projection.scale(1).translate([0,0]);
@@ -71,12 +75,9 @@ class map{
         let t = [(this.width - s * (b[1][0] + b[0][0]))/2, (this.height - s * (b[1][1] + b[0][1]))/2];
         this.projection.scale(s).translate(t);
     
-        // select
-        this.areas = this.g.selectAll(".area").data(topojson.feature(this.mapData, this.mapData.objects[objectName]).features);
+        let areas = this.g.selectAll(".area").data(topojson.feature(this.mapData, this.mapData.objects[objectName]).features);
         
-        // enter
-        this.areas
-            .enter()
+        areas.enter()
             .append('path')
             .attr("class", 'area')
             .attr("fill", this.fillColour.bind(this))
@@ -86,7 +87,6 @@ class map{
     }
 
 
-    // change colour of the constituency when clicked or unclicked
     clicked(d){
         let activeNode = "#"+d.properties.NAME_2;
         if (this.active.node() === d3.select(activeNode).node()){
@@ -108,7 +108,6 @@ class map{
     }
 
 
-    // Display information about a constituency when clicked
     displayInfo(d){        
         let partyName = '';
         let mpName = '';
@@ -126,7 +125,7 @@ class map{
         d3.select("#result").text(result);
     }
 
-    // return the colour the constituency should be filled with
+
     fillColour(d){
         for(var i = 0; i < this.electionData.length; i++) {
             if( this.electionData[i].departement === d.properties.NAME_2 ) {
@@ -136,7 +135,7 @@ class map{
         return "#ffffff";  
     }
 
-    // // Reset colour and hide information once the active constituency has been clicked again
+
     resetActive(){
         this.active.style("opacity", 1.0);
         this.active.style("stroke", "#E7E7E7");
@@ -149,21 +148,12 @@ class map{
 
 france = new map();
 
-function removePrevious(){
-    var current = d3.select("svg").empty();
-    if (current === false){
-        d3.select('svg').remove()
-    }
-}
-
 function round1(){
-    removePrevious()
-    france.init("departements.json","round1.csv", "colours.json");
+    france.init("departements.json","round1.csv", "colours.json", "vis");
 }
 
 function round2(){
-    removePrevious()
-    france.init("departements.json","round2.csv", "colours.json");
+    france.init("departements.json","round2.csv", "colours.json", "vis");
 }
 
 document.addEventListener("DOMContentLoaded", function(){
