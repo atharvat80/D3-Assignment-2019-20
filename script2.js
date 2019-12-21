@@ -33,9 +33,7 @@ class map{
         this.g,
         this.path,
         this.zoom,
-        this.colours,
-        this.name1,
-        this.name2
+        this.colours
     }
 
     /**
@@ -63,9 +61,7 @@ class map{
      * @param {string} elementID - ID of the element that the svg of visualisation will be appended to
      * @description to do
      */
-    init (mapPath, dataPath, colours, elementID, name1, name2){
-        this.name1 = name1;
-        this.name2 = name2;
+    init (mapPath, dataPath, colours, elementID){
         this.width = document.getElementById(elementID).clientWidth,
         this.height = document.getElementById(elementID).clientHeight,
         this.path = d3.geoPath().projection(this.projection);
@@ -118,19 +114,20 @@ class map{
      * @description to do
      */
     draw(){
+        let objectName = "FRA_adm2-1";
         this.projection.scale(1).translate([0,0]);
-        let b = this.path.bounds(topojson.feature(this.mapData, this.mapData.objects[this.name1]));
+        let b = this.path.bounds(topojson.feature(this.mapData, this.mapData.objects[objectName]));
         let s = .95 / Math.max((b[1][0] - b[0][0])/this.width, (b[1][1] - b[0][1])/this.height);
         let t = [(this.width - s * (b[1][0] + b[0][0]))/2, (this.height - s * (b[1][1] + b[0][1]))/2];
         this.projection.scale(s).translate(t);
     
-        let areas = this.g.selectAll(".area").data(topojson.feature(this.mapData, this.mapData.objects[this.name1]).features);
+        let areas = this.g.selectAll(".area").data(topojson.feature(this.mapData, this.mapData.objects[objectName]).features);
         
         areas.enter()
             .append('path')
             .attr("class", 'area')
             .attr("fill", this.fillColour.bind(this))
-            .attr("id", function(d){return d["properties"][this.name2]}.bind(this))
+            .attr("id", function(d){ return d.properties.NAME_2; })
             .attr("d", this.path)
             .on('click', this.clicked.bind(this));
     }
@@ -139,24 +136,65 @@ class map{
      * @description to do
      */
     clicked(d){
-        let selectedNode = d["properties"][this.name2];
-   
-        if (this.active.node() === d3.select("#"+selectedNode)){
+        let activeNode = d.properties.NAME_2;
+        if (this.active.node() === d3.select("#"+activeNode)){
             this.resetActive();
         }
         else if(this.active.node() != null){
             this.resetActive();
         }
         
-        this.active = d3.select("#"+selectedNode);
-        this.active.style("opacity", 0.5);
+        this.active = d3.select("#"+activeNode);
+        this.active.style("opacity", 0.5)
         this.active.style("stroke", "#e7e7e7");
         
         d3.select("#departement").style("visibility", "visible");
         d3.select("#result").style("visibility", "visible");
 
-        this.displayInfo(selectedNode)
+        this.displayInfo(activeNode)
         
+    }
+
+    /**
+     * @description to do
+     */
+    displayInfo(d){        
+        let partyName = '';
+        let mpName = '';
+        let conName= '';
+    
+        for (var i = 0; i < this.electionData.length; i++){
+            if(this.electionData[i].departement === d){
+                partyName = this.electionData[i].party;
+                mpName = this.electionData[i].candidate;
+                conName= this.electionData[i].departement;
+            }
+        }
+        let result = "Won by "+partyName+" party candidate "+mpName;
+        d3.select("#departement").text(conName);
+        d3.select("#result").text(result);
+    }
+
+    /**
+     * @param {object} d - represents the current smaller component of the map e.g. a constituency d3 script is iterating through
+     * @returns hex value of the colour the constituency should be coloured with as a string<br><br>
+     * @description This function iterates through names of all the constituencies in <code>map.electionData</code> checking if it matches 
+     * with the constituency d3 is currently iterating through then return the colour of constituency stored in <code>map.colours</code>
+     */
+    fillColour(d){
+        for(var i = 0; i < this.electionData.length; i++) {
+            if( this.electionData[i].departement === d.properties.NAME_2 ) {
+                return this.colours[this.electionData[i]['candidate']];
+                }
+            }
+        return "#ffffff";  
+    }
+
+    /**
+     * @description Handles a zoom event using <a href=https://github.com/d3/d3-zoom#transform_translate><code>d3.event.transform</code></a>
+     */
+    zoomed(){
+        this.g.attr("transform", d3.event.transform);
     }
 
     /**
@@ -170,51 +208,6 @@ class map{
         d3.select("#departement").style("visibility", "hidden");
         d3.select("#result").style("visibility", "hidden");
     }
-
-    /**
-     * @description to do
-     */
-    displayInfo(d){        
-        let partyName = '';
-        let mpName = '';
-    
-        for (var i = 0; i < this.electionData.length; i++){
-            if(this.electionData[i].departement === d){
-                partyName = this.electionData[i].party;
-                mpName = this.electionData[i].candidate;
-            }
-        }
-        
-        let result = "Won by "+partyName+" party candidate "+mpName;
-        if (result === "Won by  party candidate "){
-            result = "Data is not available for this departement.";
-        }
-
-        d3.select("#departement").text(d);
-        d3.select("#result").text(result);
-    }
-
-    /**
-     * @param {object} d - represents the current smaller component of the map e.g. a constituency d3 script is iterating through
-     * @returns hex value of the colour the constituency should be coloured with as a string<br><br>
-     * @description This function iterates through names of all the constituencies in <code>map.electionData</code> checking if it matches 
-     * with the constituency d3 is currently iterating through then return the colour of constituency stored in <code>map.colours</code>
-     */
-    fillColour(d){
-        for(var i = 0; i < this.electionData.length; i++) {
-            if( this.electionData[i].departement === d.properties[this.name2] ) {
-                return this.colours[this.electionData[i]['candidate']];
-                }
-            }
-        return "#ffffff";  
-    }
-
-    /**
-     * @description Handles a zoom event using <a href=https://github.com/d3/d3-zoom#transform_translate><code>d3.event.transform</code></a>
-     */
-    zoomed(){
-        this.g.attr("transform", d3.event.transform);
-    }
 }
 
 
@@ -224,10 +217,7 @@ function round1(){
     france.init(
         "france_2017/departements.json",
         "france_2017/round1.csv", 
-        "france_2017/colours.json", 
-        "vis",
-        "FRA_adm2-1",
-        "NAME_2"
+        "france_2017/colours.json", "vis"
         );
 }
 
@@ -237,10 +227,7 @@ function round2(){
     france.init(
         "france_2017/departements.json",
         "france_2017/round2.csv",
-        "france_2017/colours.json", 
-        "vis",
-        "FRA_adm2-1",
-        "NAME_2"
+        "france_2017/colours.json", "vis"
         );
 }
 
