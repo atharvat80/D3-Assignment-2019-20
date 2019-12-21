@@ -30,6 +30,11 @@ ul {
   margin-right: 20px;
 }
 
+a {
+  text-decoration: none;
+  color: deepskyblue;
+}
+
 g{
   cursor: pointer;
 }
