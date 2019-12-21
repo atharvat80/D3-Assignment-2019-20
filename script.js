@@ -10,7 +10,7 @@ class map{
      * @example
      * var countryName = new map(); //creates a new instance of map
      * 
-     * @property {Object} this.mapData - Stores the data of the topojson file of the chosen geographical area parsed by d3.json() 
+     * @property {Object} this.mapData - Stores the data of the TopoJSON file of the chosen geographical area parsed by d3.json() 
      * @property {array} this.electionData - Stores the data of the chosen election's csv file parsed by d3.csv()
      * @property {number} this.width - Width of the svg element of the map
      * @property {number} this.height - Height of the svg element of the map
@@ -21,8 +21,8 @@ class map{
      * @property {function} this.path - Don't know what this does yet!
      * @property {function} this.zoom - handles an event when user tries to zoom
      * @property {Object} this.colours - Stores the colours used to represent candidate/party on the map 
-     * @property {string} this.name1 -
-     * @property {string} this.name2 - 
+     * @property {string} this.name1 - Stores the name of the attribute that  in "objects" attribute of the TopoJSON file 
+     * @property {string} this.name2 - Stores the name of the attribute that stores the name of the constituency in "properties" attribute of the TopoJSON file 
      */
     constructor(){
         this.mapData,
@@ -30,10 +30,10 @@ class map{
         this.width,
         this.height,
         this.projection = d3.geoAlbers().rotate([0, 0]),
+        this.path = d3.geoPath().projection(this.projection),
         this.active = null,
         this.svg,
         this.g,
-        this.path,
         this.zoom,
         this.colours,
         this.name1,
@@ -63,14 +63,20 @@ class map{
      * @param {string} dataPath - file path of the dataset
      * @param {string} colours - file path of the json file that defines the colours the party/candidate will be represented by on the map
      * @param {string} elementID - ID of the element that the svg of visualisation will be appended to
-     * @description to do
+     * @description Performs following actions:
+     * <ul>
+     * <li>Assigns the arguments to map's attributes</li>
+     * <li>Sets width, height of the visualisation to that of the element it will be appended to </li>
+     * <li>Appends a svg and g element to the selected element</li>
+     * <li>Calls <code>map.getData</code> to parse data from input files</li>
+     * <li>Calls <code>map.zoom</code> to handle a zoom event</li>
+     * </ul>
      */
     init (mapPath, dataPath, colours, elementID, name1, name2){
         this.name1 = name1;
         this.name2 = name2;
         this.width = document.getElementById(elementID).clientWidth,
         this.height = document.getElementById(elementID).clientHeight,
-        this.path = d3.geoPath().projection(this.projection);
         
         this.svg = d3.select('#'+elementID)
             .append("svg")
@@ -87,7 +93,7 @@ class map{
      * @param {string} mapPath - file path of the topojson file of the chosen geographical area
      * @param {string} dataPath - file path of the dataset
      * @param {string} colours - file path of the json file that defines the colours the party/candidate will be represented by on the map
-     * @description to do
+     * @description parses the data of the file located in the provided locations and calls the <code>map.ready</code> once done.
      */
     getData(mapPath, dataPath, colours){
         d3.queue()
@@ -102,7 +108,7 @@ class map{
      * @param {string} mapData - file path of the dataset
      * @param {string} electionData - file path of the json file that defines the colours the party/candidate will be represented by on the map
      * @param {string} colours - ID of the element that the svg of visualisation will be appended to
-     * @description to do
+     * @description Return the error occurred while parsing the input files or initiates the visualisation
      */
     ready(error, mapData, electionData, colours){
         if (error != null){
@@ -117,7 +123,7 @@ class map{
     }
 
     /**
-     * @description to do
+     * @description Displays the visualisation
      */
     draw(){
         this.projection.scale(1).translate([0,0]);
@@ -138,39 +144,35 @@ class map{
     }
 
     /**
-     * @description to do
+     * @param {Object} d - path element that has been clicked on represent as an object
+     * @description Gets the <code>id</code> of <code>d</code> and edits HTML DOM style properties to highlight that path element and
+     * display information about that constituency.  
      */
     clicked(d){
         let selectedNode = d["properties"][this.name2];
    
-        if (this.active === document.getElementById(selectedNode)){
-            this.resetActive();
-        }
-        else if(this.active != null){
+        if(this.active != null){
             this.resetActive();
         }
         
         this.active = document.getElementById(selectedNode);
         this.active.style.opacity = 0.5;
         this.active.style.strokeWidth = '2px';
-        
-        d3.select("#departement").style("visibility", "visible");
-        d3.select("#result").style("visibility", "visible");
-
-        this.displayInfo(selectedNode)
+        this.displayInfo(selectedNode);
         
     }
 
     /**
-     * @description to do
+     * @description Performs following actions on <code>this.active</code>:
+     * <ul>
+     *  <li> Sets the styling back to default</li>
+     *  <li> Sets this.active to null again as the current path is no longer active<\li>
+     * </ul>
      */
     resetActive(){
         this.active.style.opacity  = 1.0;
         this.active.style.strokeWidth = '0.5px';
         this.active = null;
-
-        d3.select("#departement").style("visibility", "hidden");
-        d3.select("#result").style("visibility", "hidden");
     }
 
     /**

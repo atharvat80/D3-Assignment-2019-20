@@ -110,7 +110,7 @@
 
             
 
-            <td class="description last">Stores the data of the topojson file of the chosen geographical area parsed by d3.json()</td>
+            <td class="description last">Stores the data of the TopoJSON file of the chosen geographical area parsed by d3.json()</td>
         </tr>
 
     
@@ -363,7 +363,7 @@
 
             
 
-            <td class="description last">-</td>
+            <td class="description last">Stores the name of the attribute that  in "objects" attribute of the TopoJSON file</td>
         </tr>
 
     
@@ -386,7 +386,7 @@
 
             
 
-            <td class="description last">-</td>
+            <td class="description last">Stores the name of the attribute that stores the name of the constituency in "properties" attribute of the TopoJSON file</td>
         </tr>
 
     
@@ -486,7 +486,7 @@
     
 
     
-    <h4 class="name" id="clicked"><span class="type-signature"></span>clicked<span class="signature">()</span><span class="type-signature"></span></h4>
+    <h4 class="name" id="clicked"><span class="type-signature"></span>clicked<span class="signature">(d)</span><span class="type-signature"></span></h4>
     
 
     
@@ -494,7 +494,7 @@
 
 
 <div class="description">
-    to do
+    Gets the <code>id</code> of <code>d</code> and edits HTML DOM style properties to highlight that path element anddisplay information about that constituency.
 </div>
 
 
@@ -503,6 +503,55 @@
 
 
 
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>d</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">path element that has been clicked on represent as an object</td>
+        </tr>
+
+    
+    </tbody>
+</table>
 
 
 
@@ -538,7 +587,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line143">line 143</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line151">line 151</a>
     </li></ul></dd>
     
 
@@ -675,7 +724,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line180">line 180</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line182">line 182</a>
     </li></ul></dd>
     
 
@@ -719,7 +768,7 @@
 
 
 <div class="description">
-    to do
+    Displays the visualisation
 </div>
 
 
@@ -763,7 +812,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line122">line 122</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line128">line 128</a>
     </li></ul></dd>
     
 
@@ -900,7 +949,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line207">line 207</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line209">line 209</a>
     </li></ul></dd>
     
 
@@ -954,7 +1003,7 @@
 
 
 <div class="description">
-    to do
+    parses the data of the file located in the provided locations and calls the <code>map.ready</code> once done.
 </div>
 
 
@@ -1093,7 +1142,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line92">line 92</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line98">line 98</a>
     </li></ul></dd>
     
 
@@ -1137,7 +1186,7 @@
 
 
 <div class="description">
-    to do
+    Performs following actions:<ul><li>Assigns the arguments to map's attributes</li><li>Sets width, height of the visualisation to that of the element it will be appended to </li><li>Appends a svg and g element to the selected element</li><li>Calls <code>map.getData</code> to parse data from input files</li><li>Calls <code>map.zoom</code> to handle a zoom event</li></ul>
 </div>
 
 
@@ -1299,7 +1348,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line68">line 68</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line75">line 75</a>
     </li></ul></dd>
     
 
@@ -1343,7 +1392,7 @@
 
 
 <div class="description">
-    to do
+    Return the error occurred while parsing the input files or initiates the visualisation
 </div>
 
 
@@ -1505,7 +1554,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line107">line 107</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line113">line 113</a>
     </li></ul></dd>
     
 
@@ -1686,7 +1735,7 @@
 
 
 <div class="description">
-    to do
+    Performs following actions on <code>this.active</code>:<ul> <li> Sets the styling back to default</li> <li> Sets this.active to null again as the current path is no longer active<\li></ul>
 </div>
 
 
@@ -1730,7 +1779,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line167">line 167</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line172">line 172</a>
     </li></ul></dd>
     
 
@@ -1818,7 +1867,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line219">line 219</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line221">line 221</a>
     </li></ul></dd>
     
 
@@ -1870,7 +1919,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Dec 21 2019 13:57:41 GMT+0000 (Greenwich Mean Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Dec 21 2019 16:31:03 GMT+0000 (Greenwich Mean Time)
 </footer>
 
 <script> prettyPrint(); </script>
