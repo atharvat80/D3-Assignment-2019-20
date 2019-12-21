@@ -28,7 +28,7 @@ class map{
         this.width,
         this.height,
         this.projection = d3.geoAlbers().rotate([0, 0]),
-        this.active = d3.select(null),
+        this.active = null,
         this.svg,
         this.g,
         this.path,
@@ -141,16 +141,16 @@ class map{
     clicked(d){
         let selectedNode = d["properties"][this.name2];
    
-        if (this.active.node() === d3.select("#"+selectedNode)){
+        if (this.active === document.getElementById(selectedNode)){
             this.resetActive();
         }
-        else if(this.active.node() != null){
+        else if(this.active != null){
             this.resetActive();
         }
         
-        this.active = d3.select("#"+selectedNode);
-        this.active.style("opacity", 0.5);
-        this.active.style("stroke", "#e7e7e7");
+        this.active = document.getElementById(selectedNode);
+        this.active.style.opacity = 0.5;
+        this.active.style.strokeWidth = '2px';
         
         d3.select("#departement").style("visibility", "visible");
         d3.select("#result").style("visibility", "visible");
@@ -163,9 +163,9 @@ class map{
      * @description to do
      */
     resetActive(){
-        this.active.style("opacity", 1.0);
-        this.active.style("stroke", "#E7E7E7");
-        this.active = d3.select(null);
+        this.active.style.opacity  = 1.0;
+        this.active.style.strokeWidth = '0.5px';
+        this.active = null;
 
         d3.select("#departement").style("visibility", "hidden");
         d3.select("#result").style("visibility", "hidden");
