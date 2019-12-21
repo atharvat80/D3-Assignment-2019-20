@@ -21,6 +21,8 @@ class map{
      * @property {function} this.path - Don't know what this does yet!
      * @property {function} this.zoom - handles an event when user tries to zoom
      * @property {Object} this.colours - Stores the colours used to represent candidate/party on the map 
+     * @property {string} this.name1 -
+     * @property {string} this.name2 - 
      */
     constructor(){
         this.mapData,
@@ -172,7 +174,8 @@ class map{
     }
 
     /**
-     * @description to do
+     * @param {string} d - Name of the constituency that has been clicked on
+     * @description Displays the results of the selected constituency using <code>d3.select()</code>
      */
     displayInfo(d){        
         let partyName = '';
@@ -196,9 +199,10 @@ class map{
 
     /**
      * @param {object} d - represents the current smaller component of the map e.g. a constituency d3 script is iterating through
-     * @returns hex value of the colour the constituency should be coloured with as a string<br><br>
      * @description This function iterates through names of all the constituencies in <code>map.electionData</code> checking if it matches 
      * with the constituency d3 is currently iterating through then return the colour of constituency stored in <code>map.colours</code>
+     * @returns hex value of the colour the constituency should be coloured with as a string. "#ffffff" is returned by default if 
+     * a colour code for the current constituency can't be found<br><br>
      */
     fillColour(d){
         for(var i = 0; i < this.electionData.length; i++) {
@@ -244,11 +248,16 @@ function round2(){
         );
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-    var button1 = document.getElementById("round1");
-    var button2 = document.getElementById("round2");
-    button1.addEventListener("click", round1);
-    button2.addEventListener("click", round2);
-    });
+/**
+ * @description Allows the user to decide which map the visualise by using DOM event listener 
+ */
+function selectMap(){
+    document.addEventListener("DOMContentLoaded", function(){
+        var button1 = document.getElementById("round1");
+        var button2 = document.getElementById("round2");
+        button1.addEventListener("click", round1);
+        button2.addEventListener("click", round2);
+        });
+}
 
-//source https://geo.nyu.edu/catalog/stanford-fs569ct0668
+selectMap()

@@ -49,6 +49,8 @@ class map{
      * @property {function} this.path - Don't know what this does yet!
      * @property {function} this.zoom - handles an event when user tries to zoom
      * @property {Object} this.colours - Stores the colours used to represent candidate/party on the map 
+     * @property {string} this.name1 -
+     * @property {string} this.name2 - 
      */
     constructor(){
         this.mapData,
@@ -56,12 +58,14 @@ class map{
         this.width,
         this.height,
         this.projection = d3.geoAlbers().rotate([0, 0]),
-        this.active = d3.select(null),
+        this.active = null,
         this.svg,
         this.g,
         this.path,
         this.zoom,
-        this.colours
+        this.colours,
+        this.name1,
+        this.name2
     }
 
     /**
@@ -89,7 +93,9 @@ class map{
      * @param {string} elementID - ID of the element that the svg of visualisation will be appended to
      * @description to do
      */
-    init (mapPath, dataPath, colours, elementID){
+    init (mapPath, dataPath, colours, elementID, name1, name2){
+        this.name1 = name1;
+        this.name2 = name2;
         this.width = document.getElementById(elementID).clientWidth,
         this.height = document.getElementById(elementID).clientHeight,
         this.path = d3.geoPath().projection(this.projection);
@@ -142,20 +148,19 @@ class map{
      * @description to do
      */
     draw(){
-        let objectName = "FRA_adm2-1";
         this.projection.scale(1).translate([0,0]);
-        let b = this.path.bounds(topojson.feature(this.mapData, this.mapData.objects[objectName]));
+        let b = this.path.bounds(topojson.feature(this.mapData, this.mapData.objects[this.name1]));
         let s = .95 / Math.max((b[1][0] - b[0][0])/this.width, (b[1][1] - b[0][1])/this.height);
         let t = [(this.width - s * (b[1][0] + b[0][0]))/2, (this.height - s * (b[1][1] + b[0][1]))/2];
         this.projection.scale(s).translate(t);
     
-        let areas = this.g.selectAll(".area").data(topojson.feature(this.mapData, this.mapData.objects[objectName]).features);
+        let areas = this.g.selectAll(".area").data(topojson.feature(this.mapData, this.mapData.objects[this.name1]).features);
         
         areas.enter()
             .append('path')
             .attr("class", 'area')
             .attr("fill", this.fillColour.bind(this))
-            .attr("id", function(d){ return d.properties.NAME_2; })
+            .attr("id", function(d){return d["properties"][this.name2]}.bind(this))
             .attr("d", this.path)
             .on('click', this.clicked.bind(this));
     }
@@ -164,54 +169,72 @@ class map{
      * @description to do
      */
     clicked(d){
-        let activeNode = d.properties.NAME_2;
-        if (this.active.node() === d3.select("#"+activeNode)){
+        let selectedNode = d["properties"][this.name2];
+   
+        if (this.active === document.getElementById(selectedNode)){
             this.resetActive();
         }
-        else if(this.active.node() != null){
+        else if(this.active != null){
             this.resetActive();
         }
         
-        this.active = d3.select("#"+activeNode);
-        this.active.style("opacity", 0.5)
-        this.active.style("stroke", "#e7e7e7");
+        this.active = document.getElementById(selectedNode);
+        this.active.style.opacity = 0.5;
+        this.active.style.strokeWidth = '2px';
         
         d3.select("#departement").style("visibility", "visible");
         d3.select("#result").style("visibility", "visible");
 
-        this.displayInfo(activeNode)
+        this.displayInfo(selectedNode)
         
     }
 
     /**
      * @description to do
      */
+    resetActive(){
+        this.active.style.opacity  = 1.0;
+        this.active.style.strokeWidth = '0.5px';
+        this.active = null;
+
+        d3.select("#departement").style("visibility", "hidden");
+        d3.select("#result").style("visibility", "hidden");
+    }
+
+    /**
+     * @param {string} d - Name of the constituency that has been clicked on
+     * @description Displays the results of the selected constituency using &lt;code>d3.select()&lt;/code>
+     */
     displayInfo(d){        
         let partyName = '';
         let mpName = '';
-        let conName= '';
     
         for (var i = 0; i &lt; this.electionData.length; i++){
             if(this.electionData[i].departement === d){
                 partyName = this.electionData[i].party;
                 mpName = this.electionData[i].candidate;
-                conName= this.electionData[i].departement;
             }
         }
+        
         let result = "Won by "+partyName+" party candidate "+mpName;
-        d3.select("#departement").text(conName);
+        if (result === "Won by  party candidate "){
+            result = "Data is not available for this departement.";
+        }
+
+        d3.select("#departement").text(d);
         d3.select("#result").text(result);
     }
 
     /**
      * @param {object} d - represents the current smaller component of the map e.g. a constituency d3 script is iterating through
-     * @returns hex value of the colour the constituency should be coloured with as a string&lt;br>&lt;br>
      * @description This function iterates through names of all the constituencies in &lt;code>map.electionData&lt;/code> checking if it matches 
      * with the constituency d3 is currently iterating through then return the colour of constituency stored in &lt;code>map.colours&lt;/code>
+     * @returns hex value of the colour the constituency should be coloured with as a string. "#ffffff" is returned by default if 
+     * a colour code for the current constituency can't be found&lt;br>&lt;br>
      */
     fillColour(d){
         for(var i = 0; i &lt; this.electionData.length; i++) {
-            if( this.electionData[i].departement === d.properties.NAME_2 ) {
+            if( this.electionData[i].departement === d.properties[this.name2] ) {
                 return this.colours[this.electionData[i]['candidate']];
                 }
             }
@@ -224,18 +247,6 @@ class map{
     zoomed(){
         this.g.attr("transform", d3.event.transform);
     }
-
-    /**
-     * @description to do
-     */
-    resetActive(){
-        this.active.style("opacity", 1.0);
-        this.active.style("stroke", "#E7E7E7");
-        this.active = d3.select(null);
-
-        d3.select("#departement").style("visibility", "hidden");
-        d3.select("#result").style("visibility", "hidden");
-    }
 }
 
 
@@ -245,7 +256,10 @@ function round1(){
     france.init(
         "france_2017/departements.json",
         "france_2017/round1.csv", 
-        "france_2017/colours.json", "vis"
+        "france_2017/colours.json", 
+        "vis",
+        "FRA_adm2-1",
+        "NAME_2"
         );
 }
 
@@ -255,18 +269,26 @@ function round2(){
     france.init(
         "france_2017/departements.json",
         "france_2017/round2.csv",
-        "france_2017/colours.json", "vis"
+        "france_2017/colours.json", 
+        "vis",
+        "FRA_adm2-1",
+        "NAME_2"
         );
 }
 
-document.addEventListener("DOMContentLoaded", function(){
-    var button1 = document.getElementById("round1");
-    var button2 = document.getElementById("round2");
-    button1.addEventListener("click", round1);
-    button2.addEventListener("click", round2);
-    });
+/**
+ * @description Allows the user to decide which map the visualise by using DOM event listener 
+ */
+function selectMap(){
+    document.addEventListener("DOMContentLoaded", function(){
+        var button1 = document.getElementById("round1");
+        var button2 = document.getElementById("round2");
+        button1.addEventListener("click", round1);
+        button2.addEventListener("click", round2);
+        });
+}
 
-//source https://geo.nyu.edu/catalog/stanford-fs569ct0668</code></pre>
+selectMap()</code></pre>
         </article>
     </section>
 
@@ -276,13 +298,13 @@ document.addEventListener("DOMContentLoaded", function(){
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="map.html">map</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="map.html">map</a></li></ul><h3>Global</h3><ul><li><a href="global.html#selectMap">selectMap</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Fri Dec 20 2019 22:51:22 GMT+0000 (Greenwich Mean Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Dec 21 2019 13:57:41 GMT+0000 (Greenwich Mean Time)
 </footer>
 
 <script> prettyPrint(); </script>
