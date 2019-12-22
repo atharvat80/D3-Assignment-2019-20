@@ -1,6 +1,6 @@
 /**
  * @fileOverview This module is intended to create an interactive map to visualise election results of the chosen geographical area
- * @tutorial <a href="https://github.com/atharvat80/D3_Assignment#tutorial">Visualise results of an election using D3</a>
+ * @tutorial <a href="tutorial.html"> How to use this script</a>
  */
 
 /**
