@@ -15,12 +15,12 @@ See [documentation](http://atharvat80.github.io/D3_Assignment/out/index.html) fo
 -  A Shapefile of your chosen geographical area (make sure it includes data about the administrative levels you wish to visualise)
 - Election results in CSV file format
 - Create a JSON file that defines the hex codes of the colour scheme for the visualisation e.g. the file should look like this
-```
-{
-"party_1": "#ffffff";
-"party_2": "#000000";
-}
-```
+    ```
+    {
+    "party_1": "#ffffff";
+    "party_2": "#000000";
+    }
+    ```
 
 ## Creating the visualisation
 ### Obtaining a TopoJSON file for the visualisation
@@ -84,22 +84,22 @@ Make sure to add classes called ```area``` and ```info``` to you CSS stylesheet 
 ### Editing the script file
 1. Create a local copy of the script which can be obtained [here](script.js) and tweak it as such:
 1. Create an instance of class ```map``` by adding 
-```
-var name = new map()
-```
-Then initiate the instance of ````map``` using
-```
-name.init(
-    "path/to/TopoJSON_file.json",
-    "path/to/election_data.csv",
-    "path/to/colourScheme.json", 
-    "map",                          /* id of the HTML tag the visualisation should be displayed in
-                                      "map" refers to the <div id="map"><div> element in the example HTML file */
-    "FRA_adm2-1",                   // See "Obtaining a TopoJSON file for the visualisation" section of the tutorial
-    "NAME_2",                       // See "Obtaining a TopoJSON file for the visualisation" section of the tutorial
-    "constituency",                 // Name of the column that contains name of the administrative levels of your data set
-    "candidate",                    // Name of the column that contains the name of the candidate
-    "party",                        // Name of the column that contains the name of the party of the candidate
-    scale                           // optional, 0.98 by default in not provided.
-);
-```
+    ```
+    var name = new map()
+    ```
+    Then initiate the instance of ````map``` using
+    ```
+    name.init(
+        "path/to/TopoJSON_file.json",
+        "path/to/election_data.csv",
+        "path/to/colourScheme.json", 
+        "map",                          /* id of the HTML tag the visualisation should be displayed in
+                                        "map" refers to the <div id="map"><div> element in the example HTML file */
+        "FRA_adm2-1",                   // See "Obtaining a TopoJSON file for the visualisation" section of the tutorial
+        "NAME_2",                       // See "Obtaining a TopoJSON file for the visualisation" section of the tutorial
+        "constituency",                 // Name of the column that contains name of the administrative levels of your data set
+        "candidate",                    // Name of the column that contains the name of the candidate
+        "party",                        // Name of the column that contains the name of the party of the candidate
+        scale                           // optional, 0.98 by default in not provided.
+    );
+    ```
