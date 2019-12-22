@@ -16,8 +16,10 @@ See [documentation](http://atharvat80.github.io/D3_Assignment/out/index.html) fo
 - Election results in CSV file format
 - Create a JSON file that defines the hex codes of the colour scheme for the visualisation e.g. the file should look like this
 ```
+{
 "party_1": "#ffffff";
 "party_2": "#000000";
+}
 ```
 
 ## Creating the visualisation
@@ -80,12 +82,12 @@ Make sure that the HTML file contains two separate elements with ```id="constitu
 ```
 Make sure to add classes called ```area``` and ```info``` to you CSS stylesheet as these define the styling for your map and the information that will be displayed
 ### Editing the script file
-Create a local copy of the script which can be obtained [here](script.js) and tweak it as such:
--  Create an instance of class ```map``` by adding 
+1. Create a local copy of the script which can be obtained [here](script.js) and tweak it as such:
+1. Create an instance of class ```map``` by adding 
 ```
 var name = new map()
 ```
--  Then initiate the instance of ````map``` using
+Then initiate the instance of ````map``` using
 ```
 name.init(
     "path/to/TopoJSON_file.json",
@@ -100,5 +102,4 @@ name.init(
     "party",                        // Name of the column that contains the name of the party of the candidate
     scale                           // optional, 0.98 by default in not provided.
 );
-``` 
-- Add the script path to your html file (refer to line 16 of the example HTML file) save changes and the visualisation should display by running the HTML file.
+```
