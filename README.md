@@ -10,9 +10,9 @@ See [documentation](http://atharvat80.github.io/D3_Assignment/out/index.html) fo
     - [D3 Queue](https://github.com/d3/d3-queue#d3-queue) 
     - D3 TopoJSON
     
-    *These can be linked directly in the HTML file of your visualisation*
+    These can be linked directly in the HTML file of your visualisation
 
--  A Shapefile of your chosen geographical area (make sure it includes data about the administrative levels you wish to visualise)
+- A Shapefile of your chosen geographical area (make sure it includes data about the administrative levels you wish to visualise)
 - Election results in CSV file format
 - Create a JSON file that defines the hex codes of the colour scheme for the visualisation e.g. the file should look like this
     ```
@@ -36,7 +36,7 @@ For example, the [departements.json](./france_2017/departements.json) used for t
 
 ![TopoJSON Structure](./media/structure.png)
 
-```objects:FRA_adm2-1``` contains data about all the french departements in the map and ```properties:NAME_2``` contains the name of of the departement. Therefore, ```"FRA_adm2-1"``` and ```"NAME_2"``` have been passed as arguments while initiating the visualisation so the script can extract relevant data from the TopoJSON file.
+```objects:FRA_adm2-1``` contains data about all the french departements in the map and ```properties:NAME_2``` contains the name of the departement. Therefore, ```"FRA_adm2-1"``` and ```"NAME_2"``` have been passed as arguments while initiating the visualisation so the script can extract relevant data from the TopoJSON file.
 
 *Note: other TopoJSON file have a similar format just with different names for the attributes*
 
@@ -94,13 +94,13 @@ Make sure to add classes called ```area``` and ```info``` to you CSS stylesheet 
         "path/to/TopoJSON_file.json",
         "path/to/election_data.csv",
         "path/to/colourScheme.json", 
-        "map",                          /* id of the HTML tag the visualisation should be displayed in
-                                        "map" refers to the <div id="map"><div> element in the example HTML file */
-        "FRA_adm2-1",                   // See "Obtaining a TopoJSON file for the visualisation" section of the tutorial
-        "NAME_2",                       // See "Obtaining a TopoJSON file for the visualisation" section of the tutorial
-        "constituency",                 // Name of the column that contains name of the administrative levels of your data set
-        "candidate",                    // Name of the column that contains the name of the candidate
-        "party",                        // Name of the column that contains the name of the party of the candidate
-        scale                           // optional, 0.98 by default in not provided.
+        "map",                      // id of the HTML tag the visualisation should be displayed in
+                                    //"map" refers to the <div id="map"><div> element in the example HTML file
+        "FRA_adm2-1",               // See "Obtaining a TopoJSON file for the visualisation" section of the tutorial
+        "NAME_2",                   // See "Obtaining a TopoJSON file for the visualisation" section of the tutorial
+        "constituency",             // Name of the column that contains name of the administrative levels of your data set
+        "candidate",                // Name of the column that contains the name of the candidate
+        "party",                    // Name of the column that contains the name of the party of the candidate
+        scale                       // optional, 0.98 by default in not provided.
     );
     ```
