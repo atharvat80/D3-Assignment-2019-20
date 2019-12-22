@@ -1,10 +1,12 @@
 /**
  * @fileOverview This module is intended to create an interactive map to visualise election results of the chosen geographical area
  * @tutorial <a href="tutorial.html"> How to use this script</a>
+ * @license MIT Lisence v2
  */
 
 /**
  * Class that serves as a template for the visualisation. It contains all the attributes and methods required for the visualisation. 
+ * Please see the <a href="tutorial.html">tutorial</a> on how to create a visualisation for more support
 */
 class map{
     /**Defines the attributes of class map

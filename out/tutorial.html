@@ -3,12 +3,12 @@
     <head>
         <meta charset="UTF-8">
         <title>Tutorial</title>
-        <link href="/path/to/stylesheet.css" rel="stylesheet" type="text/css">
+        <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+        <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
         <style>
             body{
                 margin-left: 15%;
                 margin-right: 15%;
-                font-family: Arial, Helvetica, sans-serif;
             }
             img{
                 margin-top: 10px;
@@ -33,24 +33,15 @@
                 font-size: smaller;
                 color: navy;
             }
-            hr{
-                display: block;
-                height: 1px;
-                border: 0;
-                border-top: 1px solid #ccc;
-                margin: 1em 0;
-                padding: 0;
-            }
-            h3{
-                text-align: center;
+            div{
+                margin-left:30px;
             }
         </style>
     </head>
     
     <body>
-        <h3>Prerequisites</h3>
-        <hr>
-        <ol class="indent">
+        <h1>Prerequisites</h1>
+        <ol>
             <li><p><a href="https://d3js.org/">D3</a> the javascript module and it's following submodules:</p>
             <ul>
                 <li><a href="https://github.com/d3/d3-queue#d3-queue">D3 Queue</a> </li>
@@ -70,12 +61,11 @@
                     </code>
                 </p>
             </li>
-        </ol><br><br>
+        </ol>
 
-        <h3>Creating the visualisation</h3>
-        <hr>
-            <h4 >Obtaining a TopoJSON file for the visualisation</h4>
-            <hr>
+        <h1>Creating the visualisation</h1>
+        <div>
+            <h2 >Obtain a TopoJSON file for the visualisation</h2>
                 <p>Convert the shapefile into TopoJSON file format. <a href="https://mapshaper.org/">Mapshaper</a> is a simple online tool that can be used to convert shapefiles into TopoJSON format</p>
                 <ol>
                     <li>Find and upload your shapefile by clicking the select button</li>
@@ -88,12 +78,11 @@
                 <p>For example, the <a href="../france_2017/departements.json">departements.json</a> used for the exemplar visualisation is structured like this</p>
                 <p><img src="../media/structure.png" alt="TopoJSON Structure" /></p>
                 <p><code>objects:FRA_adm2-1</code> contains data about all the french departements in the map and <code>properties:NAME_2</code> contains the name of the departement. Therefore, <code>"FRA_adm2-1"</code> and <code>"NAME_2"</code> have been passed as arguments while initiating the visualisation so the script can extract relevant data from the TopoJSON file.</p>
-                <p>Note: other TopoJSON file have a similar format just with different names for the attributes</p><br>
+                <p>Note: other TopoJSON file have a similar format just with different names for the attributes</p>
 
-            <h4>Create a suitable HTML and CSS file</h4>
-            <hr>
+            <h2>Create a suitable HTML and CSS file</h2>
                 <p>A very basic template files are included below</p>
-                <h5>Sample HTML file</h5>
+                <h3>Sample HTML file</h3>
                 <pre><code class="codeBlock">
 &lt;!DOCTYPE html&gt;
 &lt;html&gt;
@@ -116,22 +105,21 @@
 &lt;/html&gt;
                 </code></pre>
                 <p>Make sure that the HTML file contains two separate elements with <code>id="constituency" class="info"</code> and <code>id="results class="info"</code> as they are required to display results of an area when the user clicks on it.</p>
-                <h5>Sample CSS file</h5>
+                <h3>Sample CSS file</h3>
                 <pre><code class="codeBlock">
-    .area {
-        stroke: colour;
-        stroke-width: width;
-        // styling for the path elements that make up the map here
-    }
-        
-    .info{
-        // styling for the text that displays results here
-    }
+.area {
+    stroke: colour;
+    stroke-width: width;
+    // styling for the path elements that make up the map here
+}
+    
+.info{
+    // styling for the text that displays results here
+}
                 </code></pre>
                 <p>Make sure to add classes called <code>area</code> and <code>info</code> to you CSS stylesheet as these define the styling for your map and the information that will be displayed</p><br>
     
-            <h4>Editing the script file</h4>
-            <hr>
+            <h2>Editing the script file</h2>
                 <ol>
                     <li><p>Create a local copy of the script which can be obtained <a href="../script.js">here</a> and tweak it as such:</p></li>
                     <li><p>Create an instance of class <code>map</code> by adding </p>
@@ -151,7 +139,9 @@ name.init(
     scale                       // optional, 0.98 by default in not provided.
 );
                         </code></pre>
+                        The visualisation should now show up after running the HTML file.
                     </li>
-                </ol>    
+                </ol><br><br><br>
+        </div>    
     </body>
 </html>
