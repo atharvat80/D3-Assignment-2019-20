@@ -87,8 +87,8 @@ Make sure to add classes called ```area``` and ```info``` to you CSS stylesheet 
     ```
     var name = new map()
     ```
-    Then initiate the instance of ```map``` using
-    
+    Then initiate the instance of ```map``` using the ```map.init()``` method as such:
+
     ```
     name.init(
         "path/to/TopoJSON_file.json",
