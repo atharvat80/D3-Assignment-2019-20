@@ -294,7 +294,7 @@
 
             
 
-            <td class="description last">Don't know what this does yet!</td>
+            <td class="description last">Stores a set of functions that convert point data in the TopoJSON file path elements using <a href="https://github.com/d3/d3-geo#path_projection">d3-geo projection</a></td>
         </tr>
 
     
@@ -390,6 +390,98 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>this.constituency</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Stores the name of the column that contains the constituencies</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>this.candidate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Stores the name of the column that contains the candidates</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>this.party</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Stores the name of the column that contains the party names</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>this.scale</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Defines the scale of the visualisation when it's rendered (0.98 by default)</td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -425,7 +517,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line27">line 27</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line29">line 29</a>
     </li></ul></dd>
     
 
@@ -452,11 +544,6 @@
 
 
 
-
-
-    <h5>Example</h5>
-    
-    <pre class="prettyprint"><code>var countryName = new map(); //creates a new instance of map</code></pre>
 
 
 
@@ -494,7 +581,7 @@
 
 
 <div class="description">
-    Gets the <code>id</code> of <code>d</code> and edits HTML DOM style properties to highlight that path element anddisplay information about that constituency.
+    Gets the <code>id</code> of <code>d</code> and edits HTML DOM style properties to highlight that path element anddisplay information about that constituency. If the same path has been clicked on twice the path style is set back to defaultand the information is hidden.
 </div>
 
 
@@ -587,7 +674,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line151">line 151</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line167">line 167</a>
     </li></ul></dd>
     
 
@@ -724,7 +811,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line182">line 182</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line204">line 204</a>
     </li></ul></dd>
     
 
@@ -812,7 +899,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line128">line 128</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line141">line 141</a>
     </li></ul></dd>
     
 
@@ -949,7 +1036,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line209">line 209</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line231">line 231</a>
     </li></ul></dd>
     
 
@@ -1142,7 +1229,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line98">line 98</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line111">line 111</a>
     </li></ul></dd>
     
 
@@ -1348,7 +1435,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line75">line 75</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line81">line 81</a>
     </li></ul></dd>
     
 
@@ -1392,7 +1479,7 @@
 
 
 <div class="description">
-    Return the error occurred while parsing the input files or initiates the visualisation
+    Returns the error occurred while parsing the input files or initiates the visualisation
 </div>
 
 
@@ -1444,7 +1531,7 @@
 
             
 
-            <td class="description last">file path of the topojson file of the chosen geographical area</td>
+            <td class="description last">file path of the TopoJSON file of the chosen geographical area</td>
         </tr>
 
     
@@ -1554,7 +1641,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line113">line 113</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line126">line 126</a>
     </li></ul></dd>
     
 
@@ -1691,7 +1778,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line53">line 53</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line59">line 59</a>
     </li></ul></dd>
     
 
@@ -1779,7 +1866,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line172">line 172</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line194">line 194</a>
     </li></ul></dd>
     
 
@@ -1867,7 +1954,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line221">line 221</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line243">line 243</a>
     </li></ul></dd>
     
 
@@ -1913,13 +2000,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="map.html">map</a></li></ul><h3>Global</h3><ul><li><a href="global.html#selectMap">selectMap</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="map.html">map</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Dec 21 2019 16:31:03 GMT+0000 (Greenwich Mean Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sun Dec 22 2019 16:31:12 GMT+0000 (Greenwich Mean Time)
 </footer>
 
 <script> prettyPrint(); </script>
