@@ -223,6 +223,36 @@ class map{
     }
 
     /**
+     * @description Adds a key to the map
+     */
+    displayKey(){
+        var parties = Object.keys(this.colours);
+        var colours = Object.values(this.colours);
+        
+        this.svg.selectAll("mydots")
+        .data(colours)
+        .enter()
+        .append("circle")
+            .attr("cx", 20)
+            .attr("cy", function(d,i){ return 20 + i*20})
+            .attr("r", 6)
+            .style("fill", function(d){ return d})
+            .style("stroke", "black")
+            .style("stroke-width", '1.5px')
+
+        this.svg.selectAll("mylabels")
+        .data(parties)
+        .enter()
+        .append("text")
+            .attr("x", 30)
+            .attr("y", function(d,i){ return 25 + i*20})
+            .text(function(d){ return d})
+            .attr("font-size", "small")
+            .attr("text-anchor", "left")
+            .style("alignment-baseline", "middle")
+    }
+
+    /**
      * @param {object} d - represents the current smaller component of the map e.g. a constituency d3 script is iterating through
      * @description This function iterates through names of all the constituencies in <code>map.electionData</code> checking if it matches 
      * with the constituency d3 is currently iterating through then return the colour of constituency stored in <code>map.colours</code>
