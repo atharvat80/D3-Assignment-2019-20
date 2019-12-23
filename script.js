@@ -1,7 +1,6 @@
 /**
  * @fileOverview This module is intended to create an interactive map to visualise election results of the chosen geographical area
  * @tutorial <a href="tutorial.html"> How to use this script</a>
- * @license MIT Lisence v2
  */
 
 /**

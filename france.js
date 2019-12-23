@@ -89,6 +89,8 @@ class map{
             .attr("id", function(d){return d["properties"][this.name2]}.bind(this))
             .attr("d", this.path)
             .on('click', this.clicked.bind(this));
+        
+        this.displayKey();
     }
 
     clicked(d){
@@ -135,6 +137,33 @@ class map{
 
         d3.select("#constituency").text(d);
         d3.select("#result").text(result);
+    }
+
+    displayKey(){
+        var parties = Object.keys(this.colours);
+        var colours = Object.values(this.colours);
+        
+        this.svg.selectAll("mydots")
+        .data(colours)
+        .enter()
+        .append("circle")
+            .attr("cx", 20)
+            .attr("cy", function(d,i){ return 20 + i*20})
+            .attr("r", 6)
+            .style("fill", function(d){ return d})
+            .style("stroke", "black")
+            .style("stroke-width", '1.5px')
+
+        this.svg.selectAll("mylabels")
+        .data(parties)
+        .enter()
+        .append("text")
+            .attr("x", 30)
+            .attr("y", function(d,i){ return 25 + i*20})
+            .text(function(d){ return d})
+            .attr("font-size", "small")
+            .attr("text-anchor", "left")
+            .style("alignment-baseline", "middle")
     }
 
     fillColour(d){
