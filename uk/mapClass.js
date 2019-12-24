@@ -156,4 +156,4 @@ class map{
 
 
 uk = new map();
-uk.init("/source/wpc.json","/source/mp_data.csv", "colours.json");
+uk.init("./source/wpc.json","./source/mp_data.csv", "colours.json");

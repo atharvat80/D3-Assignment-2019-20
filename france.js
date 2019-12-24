@@ -188,7 +188,7 @@ function round1(){
         "france_2017/departements.json",
         "france_2017/round1.csv", 
         "france_2017/colours.json",
-        "vis", "FRA_adm2-1", "NAME_2", "departement", "candidate", "party"
+        "map", "FRA_adm2-1", "NAME_2", "departement", "candidate", "party"
         );
 }
 
@@ -199,7 +199,7 @@ function round2(){
         "france_2017/departements.json",
         "france_2017/round2.csv",
         "france_2017/colours.json", 
-        "vis", "FRA_adm2-1", "NAME_2", "departement", "candidate", "party"
+        "map", "FRA_adm2-1", "NAME_2", "departement", "candidate", "party"
         );
 }
 
