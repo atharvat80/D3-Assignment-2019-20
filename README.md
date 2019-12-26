@@ -1,30 +1,34 @@
-# Visualise results of an election using D3
-See [documentation](http://atharvat80.github.io/D3_Assignment/out/index.html) for more information
+## Exemplar Visualisation 
+[2017 French presidential election results](../index.html) is a visualisation created using this script. 
 
-# Example
-- [2017 French presidential election results](http://atharvat80.github.io/D3_Assignment) 
+*[Online version](https://atharvat80.github.io/D3_Assignment/)*
 
-# Tutorial
-## Prerequisites 
+## Tutorial
+### 1. Prerequisites 
 - [D3](https://d3js.org/) the javascript module and it's following submodules:
     - [D3 Queue](https://github.com/d3/d3-queue#d3-queue) 
     - D3 TopoJSON
     
-    These can be linked directly in the HTML file of your visualisation
+    These can be linked directly in the HTML file of your visualisation (Shown in the template files further on in the tutorial)
 
-- A Shapefile of your chosen geographical area (make sure it includes data about the administrative levels you wish to visualise)
+- A Shapefile of your chosen geographical area (Make sure it includes data about the administrative levels you wish to visualise)
 - Election results in CSV file format
-- Create a JSON file that defines the hex codes of the colour scheme for the visualisation e.g. the file should look like this
+- A JSON file that defines the colour scheme for the visualisation in a format shown below
     ```
     {
-    "party_1": "#ffffff";
-    "party_2": "#000000";
+    "partyName_1": "#ffffff";
+    "partyName_2": "#000000";
+
+    ...
+
     }
     ```
+- A HTML file to display the visualisation and a CSS file to define the styling of the visualisation (Templates can be found further on in the tutorial)
 
-## Creating the visualisation
-### Obtaining a TopoJSON file for the visualisation
-Convert the shapefile into TopoJSON file format. [Mapshaper](https://mapshaper.org/) is a simple online tool that can be used to convert shapefiles into TopoJSON format
+### 2. Creating the visualisation
+
+#### 2.1 Convert your shapefile to a TopoJSON file for the visualisation
+[Mapshaper](https://mapshaper.org/) is a simple online tool that can be used to convert shapefiles into TopoJSON format
 1. Find and upload your shapefile by clicking the select button
 1. Click import once the files have been uploaded
 1. Wait for the preview to load and click export and make sure to select TopoJSON as the export format  
@@ -32,18 +36,19 @@ Convert the shapefile into TopoJSON file format. [Mapshaper](https://mapshaper.o
 
 It helps to have basic understanding of the structure of a TopoJSON file as it is required to understand what arguments should be provided while initiating the visualisation, [this](https://www.spotzi.com/en/help-center/what-is-a-topojson/) article can be very useful in understanding that. 
 
-For example, the [departements.json](./france_2017/departements.json) used for the exemplar visualisation is structured like this
+For example, the [TopoJSON file](./france_2017/departements.json) used for the exemplar visualisation is structured like this
 
-![TopoJSON Structure](./media/structure.png)
+![TopoJSON Structure](../media/structure.png)
 
-```objects:FRA_adm2-1``` contains data about all the french departements in the map and ```properties:NAME_2``` contains the name of the departement. Therefore, ```"FRA_adm2-1"``` and ```"NAME_2"``` have been passed as arguments while initiating the visualisation so the script can extract relevant data from the TopoJSON file.
+In this file ```objects:FRA_adm2-1``` contains data about all the french departements in the map and ```properties:NAME_2``` contains the name of the departement. Therefore, ```"FRA_adm2-1"``` and ```"NAME_2"``` have been passed as arguments while initiating the visualisation so the script can extract relevant data from the TopoJSON file.
 
-*Note: other TopoJSON file have a similar format just with different names for the attributes*
+Note: 
+Other TopoJSON files have a similar format i.e. they all have a "objects" and "properties" attribute just with different sub-attributes so the program only need the name of the sub-attributes to extract relevant information.
 
-### Create a suitable HTML and CSS file
+#### 2.2 Create a suitable HTML and CSS file
 A very basic template files are included below
 
-#### Sample HTML file
+##### Sample HTML file
 ```
 <!DOCTYPE html>
 <html>
@@ -68,7 +73,7 @@ A very basic template files are included below
 ```    
 Make sure that the HTML file contains two separate elements with ```id="constituency" class="info"``` and ```id="results class="info"``` as they are required to display results of an area when the user clicks on it.
 
-#### Sample CSS file
+##### Sample CSS file
 ```
 .area {
   stroke: colour;
@@ -81,26 +86,28 @@ Make sure that the HTML file contains two separate elements with ```id="constitu
 }
 ```
 Make sure to add classes called ```area``` and ```info``` to you CSS stylesheet as these define the styling for your map and the information that will be displayed
-### Editing the script file
-1. Create a local copy of the script which can be obtained [here](script.js) and tweak it as such:
-1. Create an instance of class ```map``` by adding 
-    ```
-    var name = new map()
-    ```
-    Then initiate the instance of ```map``` using the ```map.init()``` method as such:
 
-    ```
-    name.init(
-        "path/to/TopoJSON_file.json",
-        "path/to/election_data.csv",
-        "path/to/colourScheme.json", 
-        "map",                      // id of the HTML tag the visualisation should be displayed in
-                                    //"map" refers to the <div id="map"><div> element in the example HTML file
-        "FRA_adm2-1",               // See "Obtaining a TopoJSON file for the visualisation" section of the tutorial
-        "NAME_2",                   // See "Obtaining a TopoJSON file for the visualisation" section of the tutorial
-        "constituency",             // Name of the column that contains name of the administrative levels of your data set
-        "candidate",                // Name of the column that contains the name of the candidate
-        "party",                    // Name of the column that contains the name of the party of the candidate
-        scale                       // optional, 0.98 by default in not provided.
-    );
-    ```
+#### 2.3 Creating an instance of ```map```
+Create a local copy of the script which can be obtained [here](./script.js.html) and tweak it as such:
+
+Create an instance of class ```map``` by adding 
+```
+var name = new map()
+``` 
+to the script then initiate the instance of ```map``` using the ```map.init()``` method as such:
+```
+name.init(
+    "path/to/TopoJSON_file.json",
+    "path/to/election_data.csv",
+    "path/to/colourScheme.json", 
+    "map",                      // id of the HTML tag the visualisation should be displayed in
+                                //"map" refers to the <div id="map"><div> element in the example HTML file
+    "FRA_adm2-1",               // See section 2.1 of the tutorial
+    "NAME_2",                   // See section 2.1 of the tutorial
+    "constituency",             // Name of the column that contains name of the administrative levels of your data set
+    "candidate",                // Name of the column that contains the name of the candidate
+    "party",                    // Name of the column that contains the name of the party of the candidate
+    scale                       // optional, 0.98 by default if not provided.
+);
+```
+The visualisation should now show up after running the HTML file.

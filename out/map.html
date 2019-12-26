@@ -30,7 +30,7 @@
     
         <h2><span class="attribs"><span class="type-signature"></span></span>map<span class="signature">()</span><span class="type-signature"></span></h2>
         
-            <div class="class-description">Class that serves as a template for the visualisation. It contains all the attributes and methods required for the visualisation. Please see the <a href="tutorial.html">tutorial</a> on how to create a visualisation for more support</div>
+            <div class="class-description"><code>map</code> serves as a template for the visualisation. It contains all the attributes and methods required for the visualisation.</div>
         
     
 </header>
@@ -117,98 +117,6 @@
 
         <tr>
             
-                <td class="name"><code>this.electionData</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">array</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Stores the data of the chosen election's csv file parsed by d3.csv()</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>this.width</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Width of the svg element of the map</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>this.height</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">number</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Height of the svg element of the map</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>this.projection</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">function</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Defines which <a href="https://github.com/d3/d3-geo-projection">d3 projection</a> to use</td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>this.active</code></td>
             
 
@@ -248,7 +156,7 @@
 
             
 
-            <td class="description last">Stores the svg element to be appended to an element of the specified ID of the page</td>
+            <td class="description last">Stores the svg element that displays the visualisation</td>
         </tr>
 
     
@@ -271,7 +179,53 @@
 
             
 
-            <td class="description last">Stores individual svg path elements of the constituencies as one element to form the svg of the country</td>
+            <td class="description last">Stores the group element that groups the path elements of the visualisation inside the svg element</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>this.colours</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Object</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Stores the colours used to represent candidate/party on the map</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>this.projection</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">function</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Defines which <a href="https://github.com/d3/d3-geo-projection">d3 projection</a> to use</td>
         </tr>
 
     
@@ -324,13 +278,13 @@
 
         <tr>
             
-                <td class="name"><code>this.colours</code></td>
+                <td class="name"><code>this.electionData</code></td>
             
 
             <td class="type">
             
                 
-<span class="param-type">Object</span>
+<span class="param-type">array</span>
 
 
             
@@ -340,122 +294,7 @@
 
             
 
-            <td class="description last">Stores the colours used to represent candidate/party on the map</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>this.name1</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Stores the name of the attribute that  in "objects" attribute of the TopoJSON file</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>this.name2</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Stores the name of the attribute that stores the name of the constituency in "properties" attribute of the TopoJSON file</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>this.constituency</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Stores the name of the column that contains the constituencies</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>this.candidate</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Stores the name of the column that contains the candidates</td>
-        </tr>
-
-    
-
-        <tr>
-            
-                <td class="name"><code>this.party</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">string</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">Stores the name of the column that contains the party names</td>
+            <td class="description last">Stores the data of the chosen election's csv file parsed by d3.csv()</td>
         </tr>
 
     
@@ -479,6 +318,167 @@
             
 
             <td class="description last">Defines the scale of the visualisation when it's rendered (0.98 by default)</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>this.width</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Width of the svg element of the map</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>this.height</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Height of the svg element of the map</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>this.name1</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Stores the name of the sub-attribute that stores data about constituencies in "objects" attribute of the TopoJSON file</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>this.name2</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Stores the name of the sub-attribute that stores the name of the constituency in "properties" attribute of the TopoJSON file</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>this.constituency</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Stores the name of the column that contains the constituencies in the dataset</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>this.candidate</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Stores the name of the column that contains the candidates in the dataset</td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>this.party</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">string</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">Stores the name of the column that contains the party names in the dataset</td>
         </tr>
 
     
@@ -633,7 +633,7 @@
 
             
 
-            <td class="description last">path element that has been clicked on represent as an object</td>
+            <td class="description last">path element that has been clicked on by the user</td>
         </tr>
 
     
@@ -674,7 +674,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line168">line 168</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line163">line 163</a>
     </li></ul></dd>
     
 
@@ -811,7 +811,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line205">line 205</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line200">line 200</a>
     </li></ul></dd>
     
 
@@ -899,7 +899,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line228">line 228</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line223">line 223</a>
     </li></ul></dd>
     
 
@@ -943,7 +943,7 @@
 
 
 <div class="description">
-    Displays the visualisation
+    Displays the visualisation by setting the given scale, appending path elements created using the parsed data of the TopoJSON file and filling it with appropriate colours
 </div>
 
 
@@ -987,7 +987,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line142">line 142</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line137">line 137</a>
     </li></ul></dd>
     
 
@@ -1083,7 +1083,7 @@
 
             
 
-            <td class="description last">represents the current smaller component of the map e.g. a constituency d3 script is iterating through</td>
+            <td class="description last">Current sub-attribute of objects of the parsed TopoJSON file D3 is currently iterating through while entering data.</td>
         </tr>
 
     
@@ -1124,7 +1124,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line262">line 262</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line257">line 257</a>
     </li></ul></dd>
     
 
@@ -1317,7 +1317,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line112">line 112</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line107">line 107</a>
     </li></ul></dd>
     
 
@@ -1523,7 +1523,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line82">line 82</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line77">line 77</a>
     </li></ul></dd>
     
 
@@ -1729,7 +1729,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line127">line 127</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line122">line 122</a>
     </li></ul></dd>
     
 
@@ -1773,7 +1773,7 @@
 
 
 <div class="description">
-    Removes specified element <br><br> If we are using the same element to visualise more than one map, this function can be used to remove the previous map. This is required because d3 appends an svg element to the selected element as oppose to overriding it.<ul><li><code>isEmpty: Boolean</code> - Stores the value returned by <code>d3.select(element).empty()</code></li><li><code>d3.select(element).empty()</code> returns true if element doesn't exists and returns false if the element does exist.</li><li><code>d3.select(element).remove()</code> removes the selected element if it exists</li></ul>
+    Removes specified element <br><br> If we are using the same element to visualise more than one map, this function can be used to remove the previous map. This is required because d3 appends an svg element to the selected element as oppose to overriding it
 </div>
 
 
@@ -1866,7 +1866,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line60">line 60</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line55">line 55</a>
     </li></ul></dd>
     
 
@@ -1954,7 +1954,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line195">line 195</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line190">line 190</a>
     </li></ul></dd>
     
 
@@ -2042,7 +2042,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line274">line 274</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line269">line 269</a>
     </li></ul></dd>
     
 
@@ -2094,7 +2094,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Dec 23 2019 23:27:53 GMT+0000 (Greenwich Mean Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Dec 26 2019 23:11:36 GMT+0000 (Greenwich Mean Time)
 </footer>
 
 <script> prettyPrint(); </script>

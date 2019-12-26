@@ -42,107 +42,118 @@
 
 
 
+    <section>
+        <article><h2>Exemplar Visualisation</h2>
+<p><a href="../index.html">2017 French presidential election results</a> is a visualisation created using this script.</p>
+<p><em><a href="https://atharvat80.github.io/D3_Assignment/">Online version</a></em></p>
+<h2>Tutorial</h2>
+<h3>1. Prerequisites</h3>
+<ul>
+<li>
+<p><a href="https://d3js.org/">D3</a> the javascript module and it's following submodules:</p>
+<ul>
+<li><a href="https://github.com/d3/d3-queue#d3-queue">D3 Queue</a></li>
+<li>D3 TopoJSON</li>
+</ul>
+<p>These can be linked directly in the HTML file of your visualisation (Shown in the template files further on in the tutorial)</p>
+</li>
+<li>
+<p>A Shapefile of your chosen geographical area (Make sure it includes data about the administrative levels you wish to visualise)</p>
+</li>
+<li>
+<p>Election results in CSV file format</p>
+</li>
+<li>
+<p>A JSON file that defines the colour scheme for the visualisation in a format shown below</p>
+<pre class="prettyprint source"><code>{
+&quot;partyName_1&quot;: &quot;#ffffff&quot;;
+&quot;partyName_2&quot;: &quot;#000000&quot;;
 
+...
 
-
-
-
-
-
-
-<section>
-
-<header>
+}
+</code></pre>
+</li>
+<li>
+<p>A HTML file to display the visualisation and a CSS file to define the styling of the visualisation (Templates can be found further on in the tutorial)</p>
+</li>
+</ul>
+<h3>2. Creating the visualisation</h3>
+<h4>2.1 Convert your shapefile to a TopoJSON file for the visualisation</h4>
+<p><a href="https://mapshaper.org/">Mapshaper</a> is a simple online tool that can be used to convert shapefiles into TopoJSON format</p>
+<ol>
+<li>Find and upload your shapefile by clicking the select button</li>
+<li>Click import once the files have been uploaded</li>
+<li>Wait for the preview to load and click export and make sure to select TopoJSON as the export format</li>
+<li>Follow <a href="https://www.statsilk.com/maps/simplify-map-reducing-file-size-and-loading-time">this</a> article for details on simplifying the shapefile for faster processing</li>
+</ol>
+<p>It helps to have basic understanding of the structure of a TopoJSON file as it is required to understand what arguments should be provided while initiating the visualisation, <a href="https://www.spotzi.com/en/help-center/what-is-a-topojson/">this</a> article can be very useful in understanding that.</p>
+<p>For example, the <a href="./france_2017/departements.json">TopoJSON file</a> used for the exemplar visualisation is structured like this</p>
+<p><img src="../media/structure.png" alt="TopoJSON Structure"></p>
+<p>In this file <code>objects:FRA_adm2-1</code> contains data about all the french departements in the map and <code>properties:NAME_2</code> contains the name of the departement. Therefore, <code>&quot;FRA_adm2-1&quot;</code> and <code>&quot;NAME_2&quot;</code> have been passed as arguments while initiating the visualisation so the script can extract relevant data from the TopoJSON file.</p>
+<p>Note:
+Other TopoJSON files have a similar format i.e. they all have a &quot;objects&quot; and &quot;properties&quot; attribute just with different sub-attributes so the program only need the name of the sub-attributes to extract relevant information.</p>
+<h4>2.2 Create a suitable HTML and CSS file</h4>
+<p>A very basic template files are included below</p>
+<h5>Sample HTML file</h5>
+<pre class="prettyprint source"><code>&lt;!DOCTYPE html>
+&lt;html>
+    &lt;head>
+        &lt;meta charset=&quot;UTF-8&quot;>
+        &lt;title>Page Title&lt;/title>
+        &lt;link href=&quot;/path/to/stylesheet.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;>
+    &lt;/head>
     
-        <h2>script.js</h2>
-        
-    
-</header>
+    &lt;body>
+        &lt;div id=&quot;map&quot;>&lt;/div>
+        &lt;p id=&quot;constituency&quot; class=&quot;info&quot;>&lt;/p>
+        &lt;p id=&quot;result&quot; class=&quot;info&quot;>&lt;/p>
 
-<article>
-    <div class="container-overview">
-    
-        
-            <div class="description">This module is intended to create an interactive map to visualise election results of the chosen geographical area</div>
-        
+        &lt;script src=&quot;https://d3js.org/d3.v4.min.js&quot;>&lt;/script>
+        &lt;script src=&quot;https://d3js.org/d3-queue.v3.min.js&quot;>&lt;/script>
+        &lt;script src=&quot;https://d3js.org/topojson.v2.min.js&quot;>&lt;/script>
+        &lt;script src=&quot;/path/to/script.js&quot;>&lt;/script>
+    &lt;/body>
 
-        
+&lt;/html> 
+</code></pre>
+<p>Make sure that the HTML file contains two separate elements with <code>id=&quot;constituency&quot; class=&quot;info&quot;</code> and <code>id=&quot;results class=&quot;info&quot;</code> as they are required to display results of an area when the user clicks on it.</p>
+<h5>Sample CSS file</h5>
+<pre class="prettyprint source"><code>.area {
+  stroke: colour;
+  stroke-width: width;
+  // styling for the path elements that make up the map here
+}
 
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line1">line 1</a>
-    </li></ul></dd>
-    
-
-    
-    <dt class="tag-tutorial">Tutorials:</dt>
-    <dd class="tag-tutorial">
-        <ul>
-            <li><em class="disabled">Tutorial: <a href="tutorial.html"> How to use this script</a></em></li>
-        </ul>
-    </dd>
-    
-
-    
-
-    
-</dl>
+.info{
+  // styling for the text that displays results here
+}
+</code></pre>
+<p>Make sure to add classes called <code>area</code> and <code>info</code> to you CSS stylesheet as these define the styling for your map and the information that will be displayed</p>
+<h4>2.3 Creating an instance of <code>map</code></h4>
+<p>Create a local copy of the script which can be obtained <a href="./script.js.html">here</a> and tweak it as such:</p>
+<p>Create an instance of class <code>map</code> by adding</p>
+<pre class="prettyprint source"><code>var name = new map()
+</code></pre>
+<p>to the script then initiate the instance of <code>map</code> using the <code>map.init()</code> method as such:</p>
+<pre class="prettyprint source"><code>name.init(
+    &quot;path/to/TopoJSON_file.json&quot;,
+    &quot;path/to/election_data.csv&quot;,
+    &quot;path/to/colourScheme.json&quot;, 
+    &quot;map&quot;,                      // id of the HTML tag the visualisation should be displayed in
+                                //&quot;map&quot; refers to the &lt;div id=&quot;map&quot;>&lt;div> element in the example HTML file
+    &quot;FRA_adm2-1&quot;,               // See section 2.1 of the tutorial
+    &quot;NAME_2&quot;,                   // See section 2.1 of the tutorial
+    &quot;constituency&quot;,             // Name of the column that contains name of the administrative levels of your data set
+    &quot;candidate&quot;,                // Name of the column that contains the name of the candidate
+    &quot;party&quot;,                    // Name of the column that contains the name of the party of the candidate
+    scale                       // optional, 0.98 by default if not provided.
+);
+</code></pre>
+<p>The visualisation should now show up after running the HTML file.</p></article>
+    </section>
 
 
-        
-    
-    </div>
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-</article>
-
-</section>
 
 
 
@@ -156,7 +167,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Dec 23 2019 23:27:53 GMT+0000 (Greenwich Mean Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Dec 26 2019 23:11:36 GMT+0000 (Greenwich Mean Time)
 </footer>
 
 <script> prettyPrint(); </script>

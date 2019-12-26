@@ -1,31 +1,31 @@
 /**
- * @fileOverview This module is intended to create an interactive map to visualise election results of the chosen geographical area
- * @tutorial <a href="tutorial.html"> How to use this script</a>
+ * @projectname Visualise election results using D3.js
+ * @decryption This module is intended to create an interactive map to visualise election results of the chosen geographical area
+ * @author <a href="https://github.com/atharvat80/">Atharva Tidke</a>
  */
 
 /**
- * Class that serves as a template for the visualisation. It contains all the attributes and methods required for the visualisation. 
- * Please see the <a href="tutorial.html">tutorial</a> on how to create a visualisation for more support
+ * <code>map</code> serves as a template for the visualisation. It contains all the attributes and methods required for the visualisation.
 */
 class map{
     /**Defines the attributes of class map
-     * @property {Object} this.mapData - Stores the data of the TopoJSON file of the chosen geographical area parsed by d3.json() 
+     * @property {Object} this.mapData - Stores the data of the TopoJSON file of the chosen geographical area parsed by d3.json()
+     * @property {Object} this.active - Stores the area that has been clicked on by the user
+     * @property {Object} this.svg - Stores the svg element that displays the visualisation 
+     * @property {Object} this.g - Stores the group element that groups the path elements of the visualisation inside the svg element
+     * @property {Object} this.colours - Stores the colours used to represent candidate/party on the map
+     * @property {function} this.projection - Defines which <a href="https://github.com/d3/d3-geo-projection">d3 projection</a> to use
+     * @property {function} this.path - Stores a set of functions that convert point data in the TopoJSON file path elements using <a href="https://github.com/d3/d3-geo#path_projection">d3-geo projection</a>
+     * @property {function} this.zoom - handles an event when user tries to zoom 
      * @property {array} this.electionData - Stores the data of the chosen election's csv file parsed by d3.csv()
+     * @property {number} this.scale - Defines the scale of the visualisation when it's rendered (0.98 by default)
      * @property {number} this.width - Width of the svg element of the map
      * @property {number} this.height - Height of the svg element of the map
-     * @property {function} this.projection - Defines which <a href="https://github.com/d3/d3-geo-projection">d3 projection</a> to use 
-     * @property {Object} this.active - Stores the area that has been clicked on by the user
-     * @property {Object} this.svg - Stores the svg element to be appended to an element of the specified ID of the page
-     * @property {Object} this.g - Stores individual svg path elements of the constituencies as one element to form the svg of the country 
-     * @property {function} this.path - Stores a set of functions that convert point data in the TopoJSON file path elements using <a href="https://github.com/d3/d3-geo#path_projection">d3-geo projection</a>
-     * @property {function} this.zoom - handles an event when user tries to zoom
-     * @property {Object} this.colours - Stores the colours used to represent candidate/party on the map 
-     * @property {string} this.name1 - Stores the name of the attribute that  in "objects" attribute of the TopoJSON file 
-     * @property {string} this.name2 - Stores the name of the attribute that stores the name of the constituency in "properties" attribute of the TopoJSON file 
-     * @property {string} this.constituency - Stores the name of the column that contains the constituencies 
-     * @property {string} this.candidate - Stores the name of the column that contains the candidates
-     * @property {string} this.party - Stores the name of the column that contains the party names
-     * @property {number} this.scale - Defines the scale of the visualisation when it's rendered (0.98 by default)
+     * @property {string} this.name1 - Stores the name of the sub-attribute that stores data about constituencies in "objects" attribute of the TopoJSON file 
+     * @property {string} this.name2 - Stores the name of the sub-attribute that stores the name of the constituency in "properties" attribute of the TopoJSON file 
+     * @property {string} this.constituency - Stores the name of the column that contains the constituencies in the dataset
+     * @property {string} this.candidate - Stores the name of the column that contains the candidates in the dataset
+     * @property {string} this.party - Stores the name of the column that contains the party names in the dataset
      */
     constructor(){
         this.mapData,
@@ -50,12 +50,7 @@ class map{
     /**
      * @param {string} element - specifies the element to be removed
      * @description Removes specified element <br><br> If we are using the same element to visualise more than one map, this function can be used 
-     * to remove the previous map. This is required because d3 appends an svg element to the selected element as oppose to overriding it.
-     * <ul>
-     * <li><code>isEmpty: Boolean</code> - Stores the value returned by <code>d3.select(element).empty()</code></li>
-     * <li><code>d3.select(element).empty()</code> returns true if element doesn't exists and returns false if the element does exist.</li>
-     * <li><code>d3.select(element).remove()</code> removes the selected element if it exists</li>
-     * </ul>
+     * to remove the previous map. This is required because d3 appends an svg element to the selected element as oppose to overriding it
      */
     removePrevious(element){
         var isEmpty = d3.select(element).empty();
@@ -137,7 +132,7 @@ class map{
     }
 
     /**
-     * @description Displays the visualisation
+     * @description Displays the visualisation by setting the given scale, appending path elements created using the parsed data of the TopoJSON file and filling it with appropriate colours
      */
     draw(){
         this.projection.scale(1).translate([0,0]);
@@ -160,7 +155,7 @@ class map{
     }
 
     /**
-     * @param {Object} d - path element that has been clicked on represent as an object
+     * @param {Object} d - path element that has been clicked on by the user
      * @description Gets the <code>id</code> of <code>d</code> and edits HTML DOM style properties to highlight that path element and
      * display information about that constituency. If the same path has been clicked on twice the path style is set back to default
      * and the information is hidden.
@@ -253,7 +248,7 @@ class map{
     }
 
     /**
-     * @param {object} d - represents the current smaller component of the map e.g. a constituency d3 script is iterating through
+     * @param {object} d - Current sub-attribute of objects of the parsed TopoJSON file D3 is currently iterating through while entering data.
      * @description This function iterates through names of all the constituencies in <code>map.electionData</code> checking if it matches 
      * with the constituency d3 is currently iterating through then return the colour of constituency stored in <code>map.colours</code>
      * @returns hex value of the colour the constituency should be coloured with as a string. "#ffffff" is returned by default if 
