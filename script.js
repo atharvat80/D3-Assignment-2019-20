@@ -65,11 +65,20 @@ class map{
      * @param {string} dataPath - file path of the dataset
      * @param {string} colours - file path of the json file that defines the colours the party/candidate will be represented by on the map
      * @param {string} elementID - ID of the element that the svg of visualisation will be appended to
-     * @description Performs following actions:
+     * @param {string} name1 - name of the sub-attribute that stores data about constituencies in "objects" attribute of the TopoJSON file
+     * @param {string} name2 - name of the sub-attribute that stores the name of the constituency in "properties" attribute of the TopoJSON file 
+     * @param {string} constituency - name of the column that contains the constituencies in the dataset
+     * @param {string} candidate - name of the column that contains the candidates in the dataset
+     * @param {string} party - name of the column that contains the party in the dataset
+     * @param {number} scale - scale of the visualisation
+     * @description <p style="font-weight: bold">This is the only method you need to call and provide parameters to in order to initiate the visualisation after creating an instance of map</p> 
+     * 
+     * Performs following actions:
      * <ul>
      * <li>Assigns the arguments to map's attributes</li>
      * <li>Sets width, height of the visualisation to that of the element it will be appended to </li>
      * <li>Appends a svg and g element to the selected element</li>
+     * <li>Calls <code>map.getData</code> to parse given data files </li>
      * <li>Calls <code>map.getData</code> to parse data from input files</li>
      * <li>Calls <code>map.zoom</code> to handle a zoom event</li>
      * </ul>
@@ -117,7 +126,7 @@ class map{
      * @param {string} mapData - file path of the dataset
      * @param {string} electionData - file path of the json file that defines the colours the party/candidate will be represented by on the map
      * @param {string} colours - ID of the element that the svg of visualisation will be appended to
-     * @description Returns the error occurred while parsing the input files or initiates the visualisation
+     * @description Returns the error occurred while parsing the input files or initiates the visualisation if no errors occurred
      */
     ready(error, mapData, electionData, colours){
         if (error != null){

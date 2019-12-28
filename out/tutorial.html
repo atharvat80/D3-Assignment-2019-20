@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>Tutorial</title>
+        <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+        <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+        <style>
+            body{
+                margin-left: 15%;
+                margin-right: 15%;
+            }
+            img{
+                margin-top: 10px;
+                margin-bottom: 10px;
+                display: block;
+                margin-left: auto;
+                margin-right: auto;
+                width: 70%;
+            }
+            code{
+                margin-top: 10px;
+                margin-bottom: 10px;
+                font-family: 'Consolas', Courier, monospace;
+                color: navy;
+            }
+            .codeBlock{
+                background-color: #eee;
+                border: 1px solid #999;
+                display: block;
+                padding: 20px;
+                font-family: 'Consolas', Courier, monospace;
+                font-size: smaller;
+                color: navy;
+            }
+            div{
+                margin-left:30px;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <h1>Prerequisites</h1>
+        <ol>
+            <li><p><a href="https://d3js.org/">D3</a> the javascript module and it's following submodules:</p>
+            <ul>
+                <li><a href="https://github.com/d3/d3-queue#d3-queue">D3 Queue</a> </li>
+                <li>D3 TopoJSON</li>
+            </ul>
+            <p>These can be linked directly in the HTML file of your visualisation</p></li>
+            <li><p>A Shapefile of your chosen geographical area (make sure it includes data about the administrative levels you wish to visualise)</p></li>
+            <li><p>Election results in CSV file format</p></li>
+            <li>
+                <p>Create a JSON file that defines the hex codes of the colour scheme for the visualisation e.g. the file should look like this
+                    <code>
+                        {
+                        "party_1": "#ffffff";
+                        "party_2": "#000000";
+                        ...
+                        }
+                    </code>
+                </p>
+            </li>
+        </ol>
+
+        <h1>Creating the visualisation</h1>
+        <div>
+            <h2 >Obtain a TopoJSON file for the visualisation</h2>
+                <p>Convert the shapefile into TopoJSON file format. <a href="https://mapshaper.org/">Mapshaper</a> is a simple online tool that can be used to convert shapefiles into TopoJSON format</p>
+                <ol>
+                    <li>Find and upload your shapefile by clicking the select button</li>
+                    <li>Click import once the files have been uploaded</li>
+                    <li>Wait for the preview to load and click export and make sure to select TopoJSON as the export format  </li>
+                    <li>Follow <a href="https://www.statsilk.com/maps/simplify-map-reducing-file-size-and-loading-time">this</a> article for details on simplifying the shapefile for faster processing</li>
+                </ol>
+
+                <p>It helps to have basic understanding of the structure of a TopoJSON file as it is required to understand what arguments should be provided while initiating the visualisation, <a href="https://www.spotzi.com/en/help-center/what-is-a-topojson/">this</a> article can be very useful in understanding that. </p>
+                <p>For example, the <a href="../france_2017/departements.json">departements.json</a> used for the exemplar visualisation is structured like this</p>
+                <p><img src="../media/structure.png" alt="TopoJSON Structure" /></p>
+                <p><code>objects:FRA_adm2-1</code> contains data about all the french departements in the map and <code>properties:NAME_2</code> contains the name of the departement. Therefore, <code>"FRA_adm2-1"</code> and <code>"NAME_2"</code> have been passed as arguments while initiating the visualisation so the script can extract relevant data from the TopoJSON file.</p>
+                <p>Note: other TopoJSON file have a similar format just with different names for the attributes</p>
+
+            <h2>Create a suitable HTML and CSS file</h2>
+                <p>A very basic template files are included below</p>
+                <h3>Sample HTML file</h3>
+                <pre><code class="codeBlock">
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+    &lt;head&gt;
+        &lt;meta charset="UTF-8"&gt;
+        &lt;title&lt;Page Title&lt;/title&gt;
+        &lt;link href="/path/to/stylesheet.css" rel="stylesheet" type="text/css"&gt;
+        &lt;/head&gt;
+
+    &lt;body&gt;
+        &lt;div id="map"&gt;&lt;/div&gt;
+        &lt;p id="constituency" class="info"&gt;&lt;/p&gt;
+        &lt;p id="result" class="info"&gt;&lt;/p&gt;
+
+        &lt;script src="https://d3js.org/d3.v4.min.js"&gt;&lt;/script&gt;
+        &lt;script src="https://d3js.org/d3-queue.v3.min.js"&gt;&lt;/script&gt;
+        &lt;script src="https://d3js.org/topojson.v2.min.js"&gt;&lt;/script&gt;
+        &lt;script src="/path/to/script.js"&gt;&lt;/script&gt;
+    &lt;/body&gt; 
+&lt;/html&gt;
+                </code></pre>
+                <p>Make sure that the HTML file contains two separate elements with <code>id="constituency" class="info"</code> and <code>id="results class="info"</code> as they are required to display results of an area when the user clicks on it.</p>
+                <h3>Sample CSS file</h3>
+                <pre><code class="codeBlock">
+.area {
+    stroke: colour;
+    stroke-width: width;
+    // styling for the path elements that make up the map here
+}
+    
+.info{
+    // styling for the text that displays results here
+}
+                </code></pre>
+                <p>Make sure to add classes called <code>area</code> and <code>info</code> to you CSS stylesheet as these define the styling for your map and the information that will be displayed</p><br>
+    
+            <h2>Editing the script file</h2>
+                <ol>
+                    <li><p>Create a local copy of the script which can be obtained <a href="../script.js">here</a> and tweak it as such:</p></li>
+                    <li><p>Create an instance of class <code>map</code> by adding </p>
+                        <pre><code>var name = new map()</code></pre>
+                        <p>Then initiate the instance of <code>map</code> using the <code>map.init()</code> method as such:</p>
+                        <pre><code class="codeBlock">
+name.init(
+    "path/to/TopoJSON_file.json",
+    "path/to/election_data.csv",
+    "path/to/colourScheme.json", 
+    "map",                      // id of the HTML tag the visualisation should be displayed in
+    "FRA_adm2-1",               // See "Obtaining a TopoJSON file for the visualisation" section of the tutorial
+    "NAME_2",                   // See "Obtaining a TopoJSON file for the visualisation" section of the tutorial
+    "constituency",             // Name of the column that contains name of the administrative levels
+    "candidate",                // Name of the column that contains the name of the candidate
+    "party",                    // Name of the column that contains the name of the party of the candidate
+    scale                       // optional, 0.98 by default in not provided.
+);
+                        </code></pre>
+                        The visualisation should now show up after running the HTML file.
+                    </li>
+                </ol><br><br><br>
+        </div>    
+    </body>
+</html>
