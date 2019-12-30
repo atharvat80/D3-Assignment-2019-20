@@ -4,13 +4,17 @@
         <meta charset="UTF-8">
         <title>2017 French Presidential Election Results</title>
         <link href="stylesheet.css" rel="stylesheet" type="text/css">
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+        <script src="https://d3js.org/topojson.v2.min.js"></script>
+        <script src="script.js"></script>
 
     </head>
     <body>
         <div class="topnav">
             <a class="passive"> 2017 French Presidential Election Results by Departements</a>
             <a href="./out/index.html">Documentation</a>
-            <a href="./source/index.html">Source</a>
+            <a href="https://bl.ocks.org/miguelrofer/ac1ec983fc8c1d0b8677259e6bb96198">Source</a>
             <a href="https://github.com/atharvat80/D3_Assignment">Github Repository</a>
         </div> 
 
@@ -25,7 +29,7 @@
             
             <hr><p style="text-align: center; font-weight: bold;">About</p><hr>
             <ul>
-                <li>Author: Atharva Tidke</li>
+                <li>Author: <a href="https://github.com/atharvat80">Atharva Tidke</a></li>
                 <li>Election data source: <a href="https://en.wikipedia.org/wiki/2017_French_presidential_election#By_department">Wikipedia</a></li>
                 <li>France shapefile source: <a href="https://geo.nyu.edu/catalog/stanford-fs569ct0668">NYU Spatial Data Repository</a></li>
             </ul>
@@ -36,10 +40,40 @@
         
         <div id="map" class="content"></div>
 
-        <script src="https://d3js.org/d3.v4.min.js"></script>
-        <script src="https://d3js.org/d3-queue.v3.min.js"></script>
-        <script src="https://d3js.org/topojson.v2.min.js"></script>
-        <script src="france.js"></script>
+        <script>
+            function round1(){
+                france = new map();
+                france.removePrevious('svg');
+                france.init(
+                    "france_2017/departements.json",
+                    "france_2017/round1.csv", 
+                    "france_2017/colours.json",
+                    "map", "FRA_adm2-1", "NAME_2", "departement", "candidate", "party"
+                    );
+            }
+
+            function round2(){
+                france = new map();
+                france.removePrevious('svg');
+                france.init(
+                    "france_2017/departements.json",
+                    "france_2017/round2.csv",
+                    "france_2017/colours.json", 
+                    "map", "FRA_adm2-1", "NAME_2", "departement", "candidate", "party"
+                    );
+            }
+
+            function selectMap(){
+                document.addEventListener("DOMContentLoaded", function(){
+                    var button1 = document.getElementById("round1");
+                    var button2 = document.getElementById("round2");
+                    button1.addEventListener("click", round1);
+                    button2.addEventListener("click", round2);
+                    });
+            }
+
+            selectMap()
+        </script>
 
     </body>
     

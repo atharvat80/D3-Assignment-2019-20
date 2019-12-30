@@ -56,17 +56,25 @@ A very basic template files are included below
         <meta charset="UTF-8">
         <title>Page Title</title>
         <link href="/path/to/stylesheet.css" rel="stylesheet" type="text/css">
-    </head>
-    
-    <body>
-        <div id="map"></div>
-        <p id="constituency" class="info"></p>
-        <p id="result" class="info"></p>
 
+        <!-- get D3 scripts -->
         <script src="https://d3js.org/d3.v4.min.js"></script>
         <script src="https://d3js.org/d3-queue.v3.min.js"></script>
         <script src="https://d3js.org/topojson.v2.min.js"></script>
+
+        <!-- get the script of the visualisation -->
         <script src="/path/to/script.js"></script>
+        <!-- Can be linked using <script scr="https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/script.js"></script> as well-->
+    </head>
+    
+    <body>
+        <!-- container for the visualisation -->
+        <div id="map"></div>
+        
+        <!-- containers to display results  -->
+        <p id="constituency" class="info"></p>
+        <p id="result" class="info"></p>        
+    
     </body>
 
 </html> 
@@ -88,26 +96,23 @@ Make sure that the HTML file contains two separate elements with ```id="constitu
 Make sure to add classes called ```area``` and ```info``` to you CSS stylesheet as these define the styling for your map and the information that will be displayed
 
 #### 2.3 Creating an instance of ```map```
-Create a local copy of the script which can be obtained [here](./script.js.html) and tweak it as such:
-
-Create an instance of class ```map``` by adding 
+Create an instance of class ```map``` and then initiate the visualisation by adding for example,
 ```
-var name = new map()
-``` 
-to the script then initiate the instance of ```map``` using the ```map.init()``` method as such:
+<script>
+    var name = new map();
+    name.init(
+        "path/to/TopoJSON_file.json",
+        "path/to/election_data.csv",
+        "path/to/colourScheme.json", 
+        "map",                      // id of the HTML tag the visualisation should be displayed in
+                                    //"map" refers to the <div id="map"><div> element in the example HTML file
+        "FRA_adm2-1",               // See section 2.1 of the tutorial
+        "NAME_2",                   // See section 2.1 of the tutorial
+        "constituency",             // Name of the column that contains name of the administrative levels of your data set
+        "candidate",                // Name of the column that contains the name of the candidate
+        "party",                    // Name of the column that contains the name of the party of the candidate
+        scale                       // optional, 0.98 by default if not provided.
+    );
+</script>
 ```
-name.init(
-    "path/to/TopoJSON_file.json",
-    "path/to/election_data.csv",
-    "path/to/colourScheme.json", 
-    "map",                      // id of the HTML tag the visualisation should be displayed in
-                                //"map" refers to the <div id="map"><div> element in the example HTML file
-    "FRA_adm2-1",               // See section 2.1 of the tutorial
-    "NAME_2",                   // See section 2.1 of the tutorial
-    "constituency",             // Name of the column that contains name of the administrative levels of your data set
-    "candidate",                // Name of the column that contains the name of the candidate
-    "party",                    // Name of the column that contains the name of the party of the candidate
-    scale                       // optional, 0.98 by default if not provided.
-);
-```
-The visualisation should now show up after running the HTML file.
+to your HTML file. The visualisation should now show up after running the HTML file.

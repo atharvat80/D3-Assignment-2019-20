@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Documentation</title>
+    <title>Documentation: Home</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -102,17 +102,25 @@ Other TopoJSON files have a similar format i.e. they all have a &quot;objects&qu
         &lt;meta charset=&quot;UTF-8&quot;>
         &lt;title>Page Title&lt;/title>
         &lt;link href=&quot;/path/to/stylesheet.css&quot; rel=&quot;stylesheet&quot; type=&quot;text/css&quot;>
-    &lt;/head>
-    
-    &lt;body>
-        &lt;div id=&quot;map&quot;>&lt;/div>
-        &lt;p id=&quot;constituency&quot; class=&quot;info&quot;>&lt;/p>
-        &lt;p id=&quot;result&quot; class=&quot;info&quot;>&lt;/p>
 
+        &lt;!-- get D3 scripts -->
         &lt;script src=&quot;https://d3js.org/d3.v4.min.js&quot;>&lt;/script>
         &lt;script src=&quot;https://d3js.org/d3-queue.v3.min.js&quot;>&lt;/script>
         &lt;script src=&quot;https://d3js.org/topojson.v2.min.js&quot;>&lt;/script>
+
+        &lt;!-- get the script of the visualisation -->
         &lt;script src=&quot;/path/to/script.js&quot;>&lt;/script>
+        &lt;!-- Can be linked using &lt;script scr=&quot;https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/script.js&quot;>&lt;/script> as well-->
+    &lt;/head>
+    
+    &lt;body>
+        &lt;!-- container for the visualisation -->
+        &lt;div id=&quot;map&quot;>&lt;/div>
+        
+        &lt;!-- containers to display results  -->
+        &lt;p id=&quot;constituency&quot; class=&quot;info&quot;>&lt;/p>
+        &lt;p id=&quot;result&quot; class=&quot;info&quot;>&lt;/p>        
+    
     &lt;/body>
 
 &lt;/html> 
@@ -131,26 +139,25 @@ Other TopoJSON files have a similar format i.e. they all have a &quot;objects&qu
 </code></pre>
 <p>Make sure to add classes called <code>area</code> and <code>info</code> to you CSS stylesheet as these define the styling for your map and the information that will be displayed</p>
 <h4>2.3 Creating an instance of <code>map</code></h4>
-<p>Create a local copy of the script which can be obtained <a href="./script.js.html">here</a> and tweak it as such:</p>
-<p>Create an instance of class <code>map</code> by adding</p>
-<pre class="prettyprint source"><code>var name = new map()
+<p>Create an instance of class <code>map</code> and then initiate the visualisation by adding for example,</p>
+<pre class="prettyprint source"><code>&lt;script>
+    var name = new map();
+    name.init(
+        &quot;path/to/TopoJSON_file.json&quot;,
+        &quot;path/to/election_data.csv&quot;,
+        &quot;path/to/colourScheme.json&quot;, 
+        &quot;map&quot;,                      // id of the HTML tag the visualisation should be displayed in
+                                    //&quot;map&quot; refers to the &lt;div id=&quot;map&quot;>&lt;div> element in the example HTML file
+        &quot;FRA_adm2-1&quot;,               // See section 2.1 of the tutorial
+        &quot;NAME_2&quot;,                   // See section 2.1 of the tutorial
+        &quot;constituency&quot;,             // Name of the column that contains name of the administrative levels of your data set
+        &quot;candidate&quot;,                // Name of the column that contains the name of the candidate
+        &quot;party&quot;,                    // Name of the column that contains the name of the party of the candidate
+        scale                       // optional, 0.98 by default if not provided.
+    );
+&lt;/script>
 </code></pre>
-<p>to the script then initiate the instance of <code>map</code> using the <code>map.init()</code> method as such:</p>
-<pre class="prettyprint source"><code>name.init(
-    &quot;path/to/TopoJSON_file.json&quot;,
-    &quot;path/to/election_data.csv&quot;,
-    &quot;path/to/colourScheme.json&quot;, 
-    &quot;map&quot;,                      // id of the HTML tag the visualisation should be displayed in
-                                //&quot;map&quot; refers to the &lt;div id=&quot;map&quot;>&lt;div> element in the example HTML file
-    &quot;FRA_adm2-1&quot;,               // See section 2.1 of the tutorial
-    &quot;NAME_2&quot;,                   // See section 2.1 of the tutorial
-    &quot;constituency&quot;,             // Name of the column that contains name of the administrative levels of your data set
-    &quot;candidate&quot;,                // Name of the column that contains the name of the candidate
-    &quot;party&quot;,                    // Name of the column that contains the name of the party of the candidate
-    scale                       // optional, 0.98 by default if not provided.
-);
-</code></pre>
-<p>The visualisation should now show up after running the HTML file.</p></article>
+<p>to your HTML file. The visualisation should now show up after running the HTML file.</p></article>
     </section>
 
 
@@ -167,7 +174,7 @@ Other TopoJSON files have a similar format i.e. they all have a &quot;objects&qu
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Sat Dec 28 2019 23:14:31 GMT+0000 (Greenwich Mean Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Dec 30 2019 12:56:32 GMT+0000 (Greenwich Mean Time)
 </footer>
 
 <script> prettyPrint(); </script>
