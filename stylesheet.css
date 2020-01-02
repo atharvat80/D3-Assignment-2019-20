@@ -24,6 +24,11 @@ p {
   cursor: default;
 }
 
+select{
+  margin-left: 15%;
+  min-width: 60%;
+}
+
 ul {
   font-size: small;
   list-style-type: disc;
