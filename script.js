@@ -161,6 +161,8 @@ class map{
             .attr("id", function(d){return d["properties"][this.name2]}.bind(this))
             .attr("d", this.path)
             .on('click', this.clicked.bind(this));
+        
+        this.displayKey();
     }
 
     /**
