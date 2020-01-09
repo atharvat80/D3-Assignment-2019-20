@@ -233,7 +233,7 @@ class map {
         var parties = Object.keys(this.colours);
         var colours = Object.values(this.colours);
 
-        this.svg.selectAll('mydots')
+        this.svg.selectAll('dots')
         .data(colours)
         .enter()
         .append('circle')
@@ -244,7 +244,7 @@ class map {
             .style('stroke', 'black')
             .style('stroke-width', '1.5px');
 
-        this.svg.selectAll('mylabels')
+        this.svg.selectAll('labels')
         .data(parties)
         .enter()
         .append('text')
