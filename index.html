@@ -45,41 +45,39 @@
 
         <script>
             france = new map();
-            
-            function round1(){
+
+            function round1 () {
                 france.removePrevious('svg');
                 france.init(
-                    "france_2017/departements.json",
-                    "france_2017/round1.csv", 
-                    "france_2017/colours.json",
-                    "map", "FRA_adm2-1", "NAME_2", "departement", "candidate", "party"
+                    'france_2017/departements.json',
+                    'france_2017/round1.csv',
+                    'france_2017/colours.json',
+                    'map', 'FRA_adm2-1', 'NAME_2', 'departement', 'candidate', 'party'
                     );
             }
 
-            function round2(){
+            function round2 () {
                 france.removePrevious('svg');
                 france.init(
-                    "france_2017/departements.json",
-                    "france_2017/round2.csv",
-                    "france_2017/colours.json", 
-                    "map", "FRA_adm2-1", "NAME_2", "departement", "candidate", "party"
+                    'france_2017/departements.json',
+                    'france_2017/round2.csv',
+                    'france_2017/colours.json',
+                    'map', 'FRA_adm2-1', 'NAME_2', 'departement', 'candidate', 'party'
                     );
             }
 
-            function selectMap(){
-                var val = document.getElementById("menu").value;
-                if (val === "1") {
+            function selectMap () {
+                var val = document.getElementById('menu').value;
+                if (val === '1') {
                     round1();
-                }
-                else if (val === "2"){
+                } else if (val === '2') {
                     round2();
-                }
-                else{
-                    france.removePrevious('svg'); 
+                } else {
+                    france.removePrevious('svg');
                 }
             }
 
-            selectMap()
+            selectMap();
         </script>
 
     </body>
