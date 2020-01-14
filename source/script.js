@@ -1,3 +1,4 @@
+// Source https://bl.ocks.org/miguelrofer/ac1ec983fc8c1d0b8677259e6bb96198
 // dimensions of visualisation
 var width;
 var height;
@@ -37,8 +38,8 @@ function init() {
      // load up data
 
        d3.queue()
-        .defer(d3.json, "https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/original_code/wpc.json?token=AMFZ23YBSBHSRNOO3H2TGOK57DFOI")
-        .defer(d3.csv, "https://raw.githubusercontent.com/atharvat80/D3_Assignment/master/original_code/mp_data.csv?token=AMFZ23YADQAGDXHKRSVNUS257DFMM")
+        .defer(d3.json, "wpc.json")
+        .defer(d3.csv, "mp_data.csv")
         .await(function(error, boundary_data, mp_data){
             console.log(mp_data);
             cons_data = mp_data;

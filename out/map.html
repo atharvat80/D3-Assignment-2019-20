@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Class: map</title>
+    <title>Class: map</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -271,7 +271,7 @@
 
             
 
-            <td class="description last">handles an event when user tries to zoom</td>
+            <td class="description last">Handles an event when user tries to zoom</td>
         </tr>
 
     
@@ -517,7 +517,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line30">line 30</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line35">line 35</a>
     </li></ul></dd>
     
 
@@ -581,7 +581,9 @@
 
 
 <div class="description">
-    Gets the <code>id</code> of <code>d</code> and edits HTML DOM style properties to highlight that path element anddisplay information about that constituency. If the same path has been clicked on twice the path style is set back to defaultand the information is hidden.
+    Gets the <code>id</code> of <code>d</code> and edits HTML DOM style properties to highlight that path element and
+display information about that constituency. If the same path has been clicked on twice the path style is set back to default
+and the information is hidden.
 </div>
 
 
@@ -674,7 +676,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line172">line 172</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line189">line 189</a>
     </li></ul></dd>
     
 
@@ -811,7 +813,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line209">line 209</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line228">line 228</a>
     </li></ul></dd>
     
 
@@ -899,7 +901,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line232">line 232</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line253">line 253</a>
     </li></ul></dd>
     
 
@@ -987,7 +989,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line146">line 146</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line159">line 159</a>
     </li></ul></dd>
     
 
@@ -1031,7 +1033,8 @@
 
 
 <div class="description">
-    This function iterates through names of all the constituencies in <code>map.electionData</code> checking if it matches with the constituency d3 is currently iterating through then return the colour of constituency stored in <code>map.colours</code>
+    This function iterates through names of all the constituencies in <code>map.electionData</code> checking if it matches
+with the constituency d3 is currently iterating through then return the colour of constituency stored in <code>map.colours</code>
 </div>
 
 
@@ -1124,7 +1127,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line266">line 266</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line290">line 290</a>
     </li></ul></dd>
     
 
@@ -1153,7 +1156,8 @@
 
         
 <div class="param-desc">
-    hex value of the colour the constituency should be coloured with as a string. "#ffffff" is returned by default if a colour code for the current constituency can't be found<br><br>
+    hex value of the colour the constituency should be coloured with as a string. "#ffffff" is returned by default if
+a colour code for the current constituency can't be found<br><br>
 </div>
 
 
@@ -1317,7 +1321,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line116">line 116</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line128">line 128</a>
     </li></ul></dd>
     
 
@@ -1361,7 +1365,17 @@
 
 
 <div class="description">
-    <p style="font-weight: bold">This is the only method you need to call and provide parameters to in order to initiate the visualisation after creating an instance of map</p> Performs following actions:<ul><li>Assigns the arguments to map's attributes</li><li>Sets width, height of the visualisation to that of the element it will be appended to </li><li>Appends a svg and g element to the selected element</li><li>Calls <code>map.getData</code> to parse given data files </li><li>Calls <code>map.getData</code> to parse data from input files</li><li>Calls <code>map.zoom</code> to handle a zoom event</li></ul>
+    <p style="font-weight: bold">This is the only method you need to call and provide parameters to in order to initiate the visualisation after creating an instance of map</p>
+
+Performs following actions:
+<ul>
+<li>Assigns the arguments to map's attributes</li>
+<li>Sets width, height of the visualisation to that of the element it will be appended to </li>
+<li>Appends a svg and g element to the selected element</li>
+<li>Calls <code>map.getData</code> to parse given data files </li>
+<li>Calls <code>map.getData</code> to parse data from input files</li>
+<li>Calls <code>map.zoom</code> to handle a zoom event</li>
+</ul>
 </div>
 
 
@@ -1661,7 +1675,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line86">line 86</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line91">line 91</a>
     </li></ul></dd>
     
 
@@ -1867,7 +1881,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line131">line 131</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line144">line 144</a>
     </li></ul></dd>
     
 
@@ -1911,7 +1925,8 @@
 
 
 <div class="description">
-    Removes specified element <br><br> If we are using the same element to visualise more than one map, this function can be used to remove the previous map. This is required because d3 appends an svg element to the selected element as oppose to overriding it
+    Removes specified element <br><br> If we are using the same element to visualise more than one map, this function can be used
+to remove the previous map. This is required because d3 appends an svg element to the selected element as oppose to overriding it
 </div>
 
 
@@ -2004,7 +2019,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line55">line 55</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line60">line 60</a>
     </li></ul></dd>
     
 
@@ -2048,7 +2063,11 @@
 
 
 <div class="description">
-    Performs following actions on <code>this.active</code>:<ul> <li> Sets the styling back to default</li> <li> Sets this.active to null again as the current path is no longer active<\li></ul>
+    Performs following actions on <code>this.active</code>:
+<ul>
+ <li> Sets the styling back to default</li>
+ <li> Sets this.active to null again as the current path is no longer active<\li>
+</ul>
 </div>
 
 
@@ -2092,7 +2111,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line199">line 199</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line217">line 217</a>
     </li></ul></dd>
     
 
@@ -2180,7 +2199,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="script.js.html">script.js</a>, <a href="script.js.html#line278">line 278</a>
+        <a href="script.js.html">script.js</a>, <a href="script.js.html#line303">line 303</a>
     </li></ul></dd>
     
 
@@ -2232,7 +2251,7 @@
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Mon Dec 30 2019 12:56:32 GMT+0000 (Greenwich Mean Time)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Jan 14 2020 23:47:12 GMT+0000 (Greenwich Mean Time)
 </footer>
 
 <script> prettyPrint(); </script>

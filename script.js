@@ -1,3 +1,8 @@
+// Based on a visualisation by Miguel Rofer (https://bl.ocks.org/miguelrofer/ac1ec983fc8c1d0b8677259e6bb96198)
+// Author: Atharva Tidke
+// Last edited: 14/01/2020
+// License: THis project is released under MIT license
+
 /**
  * @projectname Visualise election results using D3.js
  * @decryption This module is intended to create an interactive map to visualise election results of the chosen geographical area
@@ -16,7 +21,7 @@ class map {
      * @property {Object} this.colours - Stores the colours used to represent candidate/party on the map
      * @property {function} this.projection - Defines which <a href="https://github.com/d3/d3-geo-projection">d3 projection</a> to use
      * @property {function} this.path - Stores a set of functions that convert point data in the TopoJSON file path elements using <a href="https://github.com/d3/d3-geo#path_projection">d3-geo projection</a>
-     * @property {function} this.zoom - handles an event when user tries to zoom
+     * @property {function} this.zoom - Handles an event when user tries to zoom
      * @property {array} this.electionData - Stores the data of the chosen election's csv file parsed by d3.csv()
      * @property {number} this.scale - Defines the scale of the visualisation when it's rendered (0.98 by default)
      * @property {number} this.width - Width of the svg element of the map
@@ -92,17 +97,24 @@ class map {
         this.width = document.getElementById(elementID).clientWidth;
         this.height = document.getElementById(elementID).clientHeight;
 
+        // if scale not provided use default
         if (scale != null) {
             this.scale = scale;
         }
 
+        // create svg element of the map
         this.svg = d3.select('#' + elementID)
             .append('svg')
             .attr('width', this.width)
             .attr('height', this.height);
 
+        // Append 'g' element which will group the path elements of the map
         this.g = this.svg.append('g');
+
+        // Parse data
         this.getData(mapPath, dataPath, colours);
+
+        // Call map.zoom when double clicked or mouse scroll or pinch zoomed
         this.zoom = d3.zoom().on('zoom', this.zoomed.bind(this));
         this.svg.call(this.zoom);
     }
@@ -114,6 +126,7 @@ class map {
      * @description parses the data of the file located in the provided locations and calls the <code>map.ready</code> once done.
      */
     getData (mapPath, dataPath, colours) {
+        // parse data
         d3.queue()
             .defer(d3.json, mapPath)
             .defer(d3.csv, dataPath)
@@ -129,6 +142,7 @@ class map {
      * @description Returns the error occurred while parsing the input files or initiates the visualisation if no errors occurred
      */
     ready (error, mapData, electionData, colours) {
+        // Display error occurred while reading the data (if any) or store the parsed data and call map.draw()
         if (error != null) {
             alert('This error occurred while reading the data files: ' + error);
         } else {
@@ -143,13 +157,14 @@ class map {
      * @description Displays the visualisation by setting the given scale, appending path elements created using the parsed data of the TopoJSON file and filling it with appropriate colours
      */
     draw () {
+        // calculate magnitude of scale and translation
         this.projection.scale(1).translate([0, 0]);
         const b = this.path.bounds(topojson.feature(this.mapData, this.mapData.objects[this.name1]));
         const s = this.scale / Math.max((b[1][0] - b[0][0]) / this.width, (b[1][1] - b[0][1]) / this.height);
         const t = [(this.width - s * (b[1][0] + b[0][0])) / 2, (this.height - s * (b[1][1] + b[0][1])) / 2];
         this.projection.scale(s).translate(t);
 
-        // select the rendered "g" element
+        // select all the rendered "g" elements
         const areas = this.g.selectAll('.area').data(topojson.feature(this.mapData, this.mapData.objects[this.name1]).features);
 
         // enter data i.e. append all the path elements that make up the map
@@ -170,14 +185,16 @@ class map {
      * display information about that constituency. If the same path has been clicked on twice the path style is set back to default
      * and the information is hidden.
      */
+    // Highlights or removes highlight of the node that has been clicked on
     clicked (d) {
         const selectedNode = d.properties[this.name2];
         const info = d3.selectAll('.info');
-
+        // If the node that's already active has been clicked on again remove the highlight
         if (this.active != null && this.active.id === selectedNode) {
             this.resetActive();
             info.style('visibility', 'hidden');
         } else {
+            // remove highlight of the current active node and highlight the one that has been clicked on
             if (this.active != null) {
                 this.resetActive();
             }
@@ -196,6 +213,7 @@ class map {
      *  <li> Sets this.active to null again as the current path is no longer active<\li>
      * </ul>
      */
+    // Reset the styling of the active node to default and set active node back to null
     resetActive () {
         this.active.style.opacity = 1.0;
         this.active.style.strokeWidth = '0.5px';
@@ -206,10 +224,12 @@ class map {
      * @param {string} d - Name of the constituency that has been clicked on
      * @description Displays the results of the selected constituency using <code>d3.select()</code>
      */
+    // Display results
     displayInfo (d) {
         let partyName = '';
         let mpName = '';
 
+        // Find the results for the given constituency
         for (var i = 0; i < this.electionData.length; i++) {
             if (this.electionData[i][this.constituency] === d) {
                 partyName = this.electionData[i][this.party];
@@ -222,6 +242,7 @@ class map {
             result = 'Data is not available for this departement.';
         }
 
+        // Display results
         d3.select('#constituency').text(d);
         d3.select('#result').text(result);
     }
@@ -233,6 +254,7 @@ class map {
         var parties = Object.keys(this.colours);
         var colours = Object.values(this.colours);
 
+        // Render dots of the key
         this.svg.selectAll('dots')
         .data(colours)
         .enter()
@@ -244,6 +266,7 @@ class map {
             .style('stroke', 'black')
             .style('stroke-width', '1.5px');
 
+        // render text of the key
         this.svg.selectAll('labels')
         .data(parties)
         .enter()
@@ -263,6 +286,7 @@ class map {
      * @returns hex value of the colour the constituency should be coloured with as a string. "#ffffff" is returned by default if
      * a colour code for the current constituency can't be found<br><br>
      */
+    // returns hex value of the colour by comparing the current value of d with the list of constituencies and the associated party
     fillColour (d) {
         for (var i = 0; i < this.electionData.length; i++) {
             if (this.electionData[i][this.constituency] === d.properties[this.name2]) {
@@ -275,6 +299,7 @@ class map {
     /**
      * @description Handles a zoom event using <a href=https://github.com/d3/d3-zoom#transform_translate><code>d3.event.transform</code></a>
      */
+    // Handles zoom using D3 transform
     zoomed () {
         this.g.attr('transform', d3.event.transform);
     }
