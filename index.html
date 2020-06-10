@@ -1,129 +1,113 @@
 <!DOCTYPE html>
 <html lang="en-gb">
-    <head>
-        <meta charset="UTF-8">
-				<title>2017 French Presidential Election Results</title>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-        <style>
-					html, body {
-							height: 100%;
-					}
-					.area {
-						stroke: #e7e7e7;
-						stroke-width: 0.5px;
-					}
-					.container-fluid{
-							height: 93.5%;
-					}
-					.columns, .row{
-							height: 100%;   
-					}
-					.centre{
-						text-align: center;
-					}
-				</style>
-        <!-- D3.Js -->
-        <script src="https://d3js.org/d3.v4.min.js"></script>
-        <script src="https://d3js.org/d3-queue.v3.min.js"></script>
-        <script src="https://d3js.org/topojson.v2.min.js"></script>
 
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>2017 French Presidential Election Results</title>
+	<!-- Bulma -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+	<!-- D3.Js -->
+	<script src="https://d3js.org/d3.v4.min.js"></script>
+	<script src="https://d3js.org/d3-queue.v3.min.js"></script>
+	<script src="https://d3js.org/topojson.v2.min.js"></script>
+	<script src="script.js"></script>
+	<style>
+		html, body{
+			height:100%;
+		}
+		body, .full{
+			min-height: 100%;
+		}
 
-        <script src="script.js"></script>
+		.area {
+			stroke: white;
+			stroke-width: 0.5px;
+		}
 
-    </head>
-    <body class="h-100 bg-light">
-        <nav class="navbar justify-content-between navbar-dark bg-dark">
-						<span class="navbar-brand mb-0 h1">2017 French Presidential Election Results</span>
-						<div>
-							<a href="./out/index.html" class="text-white" style="margin-right: 1rem;">Documentation</a>
-            	<a href="https://github.com/atharvat80/D3_Assignment" class="text-white">View on Github</a>
-						</div>
-				</nav>
-        <div class="container-fluid">
-            <div class="row" style="padding: 1.2rem 1.2rem 1.2rem 0;">
-                <div class="col-md-3">
-									<div class="card">
-										<div class="card-header">
-											Select a round to visualise
-										</div>
-										<div class="card-body">
-											<div class="button-group" style="margin-left: 16%">
-												<button class="btn btn-link" onclick="round1()">Round 1</button>
-												<button class="btn btn-link" style="margin-left: 1rem;" onclick="round2()">Round 2</button>
-											</div>
-										</div>
-									</div>
-									<div class="card" style="margin-top: 1.2rem; height:30%;">
-										<div class="card-header">
-											Results
-										</div>
-										<div class="card-body">
-											<h4 id="constituency"></h4>
-            					<p id="result">Select an election round and click on a department to view results</p>
-										</div>
-									</div>
-									<div class="card" style="margin-top: 1.2rem; height:49%;">
-										<div class="card-header">
-											About
-										</div>
-										<div class="card-body">
-											Created by Atharva Tidke, released under MIT license. Based on a <a href="https://bl.ocks.org/miguelrofer/ac1ec983fc8c1d0b8677259e6bb96198">Visualisation</a> by <a href="https://github.com/miguelrofer">Miguel Rofer</a>.<br>
-											<br>Election data obtained from <a href="https://en.wikipedia.org/wiki/2017_French_presidential_election#By_department">Wikipedia</a>, France shapefile sourced from <a href="https://geo.nyu.edu/catalog/stanford-fs569ct0668">NYU Spatial Data Repository</a>
-										</div>
-									</div>
-								</div>
-                <div class="col-md-9 border rounded sdw centre bg-white" id="map">
-									<div>
-										<svg xmlns="http://www.w3.org/2000/svg" width="30%" height="30%" style="margin: 15%" viewBox="0 0 623.54 747.71">
-											<defs>
-												<style>
-													.cls-1{fill:#f2f2f2;}.cls-2,.cls-3,.cls-5,.cls-6{fill:none;stroke-linecap:round;stroke-linejoin:round;}.cls-2{stroke:#000;stroke-width:2.5px;}.cls-3{stroke:#262626;stroke-width:11px;}.cls-4{fill:#a4a4a4;}.cls-5,.cls-6{stroke:#161616;stroke-width:5px;}.cls-6{stroke-dasharray:16.09 16.09;}
-												</style>
-											</defs>
-											<g id="Layer_2" data-name="Layer 2">
-												<g id="vector">
-													<path class="cls-1" d="M80.75,695.22v-.5L29.63,629.78c5.6,19.65,13.93,37.57,25.76,52.86,47.15,61.26,150.43,80.51,225.5,52.45,49.14-18.33,86.24-56.85,122.85-98.4Z"/>
-													<path class="cls-1" d="M619.9,315v70.44C624.89,363.32,624.62,339.38,619.9,315Z"/>
-													<path class="cls-1" d="M557,187.41q-5.79-7-12-13.8C484.8,107.94,397,64.75,317.32,73S166.3,141.29,119,206.81a421.18,421.18,0,0,0-29.16,46.76l437.91-79.35Z"/>
-													<polygon class="cls-2" points="80.75 694.72 1.25 593.72 1.25 153.72 80.75 254.72 80.75 694.72"/>
-													<polygon class="cls-2" points="527.75 614.22 80.75 695.22 80.75 255.22 527.75 174.22 527.75 614.22"/>
-													<polygon class="cls-2" points="619.9 655.76 527.75 614.22 527.75 174.22 619.9 215.76 619.9 655.76"/>
-													<line class="cls-3" x1="394.38" y1="454.45" x2="467.99" y2="528.07"/>
-													<line class="cls-3" x1="394.38" y1="528.07" x2="467.99" y2="454.45"/>
-													<path class="cls-4" d="M292.94,0c-48.09,0-96.7,46.78,0,172C389.63,46.78,341,0,292.94,0Zm0,88.07a32.8,32.8,0,1,1,32.79-32.8A32.79,32.79,0,0,1,292.94,88.07Z"/>
-													<path class="cls-5" d="M133.24,245.71c-1.4,2.26-2.73,4.57-4,6.92"/>
-													<path class="cls-6" d="M122.27,267.13c-11.54,27.46-16.08,58.34-16.08,86.17,0,142.57,34.14,242.47,128.52,242.47,83.17,0,100.69-81.87,135.77-101.3"/>
-													<path class="cls-5" d="M377.9,491.41a30.26,30.26,0,0,1,7.91-1.05"/>
-												</g>
-											</g>
-										</svg>
-									</div>
-								</div>
-            </div>
+		.wide{
+			min-width: 100%;
+		}
+	</style>
+</head>
+
+<body>
+	<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
+		<div class="navbar-start">
+			<span class="navbar-item title is-6">
+				2017 French Presidential Election Results
+			</span>
+		</div>
+		<div class="navbar-end">
+			<a class="navbar-item" href="./out/index.html">Documentation</a>
+			<a class="navbar-item" href="https://github.com/atharvat80/D3_Assignment">View on Github</a>
+		</div>
+	</nav>
+
+	<section class="section is-flex py-3" style="height: 80%">
+		<div class="container is-marginless wide">
+			<div class="columns is-flex full">
+				<div class="column is-2">
+					<div class="tabs is-marginless">
+						<ul>
+							<li><a>Results</a></li>
+						</ul>
+					</div>
+					<div class="px-1 py-2">
+						<p id="constituency" class="title is-6"></p>
+        		<p id="result" class="subtitle is-6"></p> 
+					</div>   
 				</div>
-				<script>
-					france = new map();
+				<div class="column is-10">
+					<div class="tabs is-marginless">
+						<ul>
+							<li><a href="javascript:round1()">Round 1</a></li>
+							<li><a href="javascript:round2()">Round 2</a></li>
+						</ul>
+					</div>
+					<div id="map" class="is-flex full"></div>
+				</div>
+			</div>
+		</div>
+	</section>
 
-					function round1 () {
-							france.removePrevious('svg');
-							france.init(
-									'france_2017/departements.json',
-									'france_2017/round1.csv',
-									'france_2017/colours.json',
-									'map', 'FRA_adm2-1', 'NAME_2', 'departement', 'candidate', 'party'
-									);
-					}
+	<footer class="footer px-4 py-6">
+		<div class="content has-text-centered">
+			<p>
+				Created by Atharva Tidke, released under MIT license. Based on a <a
+					href="https://bl.ocks.org/miguelrofer/ac1ec983fc8c1d0b8677259e6bb96198">visualisation</a> by <a
+					href="https://github.com/miguelrofer">Miguel Rofer</a>.
+				<br>Election data obtained from <a
+					href="https://en.wikipedia.org/wiki/2017_French_presidential_election#By_department">Wikipedia</a>, France
+				shapefile sourced from <a href="https://geo.nyu.edu/catalog/stanford-fs569ct0668">NYU Spatial Data
+					Repository</a>
+			</p>
+		</div>
+	</footer>
 
-					function round2 () {
-							france.removePrevious('svg');
-							france.init(
-									'france_2017/departements.json',
-									'france_2017/round2.csv',
-									'france_2017/colours.json',
-									'map', 'FRA_adm2-1', 'NAME_2', 'departement', 'candidate', 'party'
-									);
-					}
-			</script>
-    </body>
-    
+	<script>
+		france = new map();
+
+		function round1() {
+			france.removePrevious('svg');
+			france.init(
+				'france_2017/departements.json',
+				'france_2017/round1.csv',
+				'france_2017/colours.json',
+				'map', 'FRA_adm2-1', 'NAME_2', 'departement', 'candidate', 'party'
+			);
+		}
+
+		function round2() {
+			france.removePrevious('svg');
+			france.init(
+				'france_2017/departements.json',
+				'france_2017/round2.csv',
+				'france_2017/colours.json',
+				'map', 'FRA_adm2-1', 'NAME_2', 'departement', 'candidate', 'party'
+			);
+		}
+	</script>
+</body>
+
 </html>
