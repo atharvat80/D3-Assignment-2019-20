@@ -26,6 +26,9 @@
             border-radius: 8px;			
             pointer-events: none;			
         }
+        .navbar-item{
+            cursor: pointer !important;
+        }
     </style>
 </head>
 
@@ -47,10 +50,10 @@
                     </div>
                     <div id="navbarMenuHeroC" class="navbar-menu">
                         <div class="navbar-end">
-                            <span class="navbar-item" href="round1()">
+                            <span class="navbar-item" onclick="round1()">
                                 Round 1
                             </span>
-                            <span class="navbar-item" href="javascript:round2()">
+                            <span class="navbar-item" onclick="round2()">
                                 Round 2
                             </span>
                             <a class="navbar-item" href="./out/index.html">
@@ -76,7 +79,7 @@
             <footer class="footer px-4 py-4">
                 <div class="content has-text-centered">
                     <p class="has-text-grey">
-                        Created by Atharva Tidke, released under MIT license. Based on a <a
+                        Created by <a href="https://github.com/atharvat80">Atharva Tidke</a>, released under MIT license. Based on a <a
                             href="https://bl.ocks.org/miguelrofer/ac1ec983fc8c1d0b8677259e6bb96198">visualisation</a> by
                         <a href="https://github.com/miguelrofer">Miguel Rofer</a>.<br>
                         Election data obtained from <a
