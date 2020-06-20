@@ -42,8 +42,7 @@ For example, the [TopoJSON file](./france_2017/departements.json) used for the e
 
 In this file ```objects:FRA_adm2-1``` contains data about all the french departements in the map and ```properties:NAME_2``` contains the name of the departement. Therefore, ```"FRA_adm2-1"``` and ```"NAME_2"``` have been passed as arguments while initiating the visualisation so the script can extract relevant data from the TopoJSON file.
 
-Note: 
-Other TopoJSON files have a similar format i.e. they all have a "objects" and "properties" attribute just with different sub-attributes so the program only need the name of the sub-attributes to extract relevant information.
+>Note: Other TopoJSON files have a similar format i.e. they all have a "objects" and "properties" attribute just with different sub-attributes so the program only need the name of the sub-attributes to extract relevant information.
 
 #### 2.2 Create a suitable HTML and CSS file
 A very basic template files are included below
@@ -69,31 +68,30 @@ A very basic template files are included below
     
     <body>
         <!-- container for the visualisation -->
-        <div id="map"></div>
-        
-        <!-- containers to display results  -->
-        <p id="constituency" class="info"></p>
-        <p id="result" class="info"></p>        
-    
+        <div id="map"></div>      
     </body>
 
 </html> 
-```    
-Make sure that the HTML file contains two separate elements with ```id="constituency" class="info"``` and ```id="results class="info"``` as they are required to display results of an area when the user clicks on it.
+```
 
 ##### Sample CSS file
 ```
 .area {
-  stroke: colour;
-  stroke-width: width;
-  // styling for the path elements that make up the map here
+    stroke: white;
+    stroke-width: 0.4;
 }
-
-.info{
-  // styling for the text that displays results here
+div.tooltip {	
+    position: absolute;									
+    padding: 0.5rem;				
+    font-size: 0.8rem;
+    line-height: 0.8rem;		
+    background: black;	
+    border: 0px;		
+    border-radius: 8px;			
+    pointer-events: none;			
 }
 ```
-Make sure to add classes called ```area``` and ```info``` to you CSS stylesheet as these define the styling for your map and the information that will be displayed
+Make sure to add classes called ```area``` and ```div.tooltip``` to you CSS stylesheet as these define the styling for your map and the information that will be displayed
 
 #### 2.3 Creating an instance of ```map```
 Create an instance of class ```map``` and then initiate the visualisation by adding for example,

@@ -102,6 +102,11 @@ class map {
             this.scale = scale;
         }
 
+        this.div = d3.select('#' + elementID)
+            .append('div')
+            .attr('class', 'tooltip')
+            .style('opacity', 0);
+
         // create svg element of the map
         this.svg = d3.select('#' + elementID)
             .append('svg')
@@ -172,79 +177,25 @@ class map {
             .append('path')
             .attr('class', 'area')
             .attr('fill', this.fillColour.bind(this))
-            .attr('id', function (d) { return d.properties[this.name2]; }.bind(this))
+            .attr('id', (d) => { return d.properties[this.name2]; })
             .attr('d', this.path)
-            .on('click', this.clicked.bind(this));
+            .on('mouseover', (d) => {
+                this.div.style('opacity', 0.8)
+                    .style('left', (d3.event.pageX) + 'px')
+                    .style('top', (d3.event.pageY) + 'px');
+                let mpName = '';
+                for (var i = 0; i < this.electionData.length; i++) {
+                    if (this.electionData[i][this.constituency] === d.properties[this.name2]) {
+                        mpName = this.electionData[i][this.candidate];
+                    }
+                }
+                this.div.html(`<b>${d.properties[this.name2]}</b> <br> Won by <u>${mpName}</u>`);
+            })
+            .on('mouseout', () => {
+                this.div.style('opacity', 0);
+            });
 
         this.displayKey();
-    }
-
-    /**
-     * @param {Object} d - path element that has been clicked on by the user
-     * @description Gets the <code>id</code> of <code>d</code> and edits HTML DOM style properties to highlight that path element and
-     * display information about that constituency. If the same path has been clicked on twice the path style is set back to default
-     * and the information is hidden.
-     */
-    // Highlights or removes highlight of the node that has been clicked on
-    clicked (d) {
-        const selectedNode = d.properties[this.name2];
-        const info = d3.selectAll('.info');
-        // If the node that's already active has been clicked on again remove the highlight
-        if (this.active != null && this.active.id === selectedNode) {
-            this.resetActive();
-            info.style('visibility', 'hidden');
-        } else {
-            // remove highlight of the current active node and highlight the one that has been clicked on
-            if (this.active != null) {
-                this.resetActive();
-            }
-            info.style('visibility', 'visible');
-            this.active = document.getElementById(selectedNode);
-            this.active.style.opacity = 0.5;
-            this.active.style.strokeWidth = '2px';
-            this.displayInfo(selectedNode);
-        }
-    }
-
-    /**
-     * @description Performs following actions on <code>this.active</code>:
-     * <ul>
-     *  <li> Sets the styling back to default</li>
-     *  <li> Sets this.active to null again as the current path is no longer active<\li>
-     * </ul>
-     */
-    // Reset the styling of the active node to default and set active node back to null
-    resetActive () {
-        this.active.style.opacity = 1.0;
-        this.active.style.strokeWidth = '0.5px';
-        this.active = null;
-    }
-
-    /**
-     * @param {string} d - Name of the constituency that has been clicked on
-     * @description Displays the results of the selected constituency using <code>d3.select()</code>
-     */
-    // Display results
-    displayInfo (d) {
-        let partyName = '';
-        let mpName = '';
-
-        // Find the results for the given constituency
-        for (var i = 0; i < this.electionData.length; i++) {
-            if (this.electionData[i][this.constituency] === d) {
-                partyName = this.electionData[i][this.party];
-                mpName = this.electionData[i][this.candidate];
-            }
-        }
-
-        let result = 'Won by ' + partyName + ' party candidate ' + mpName;
-        if (result === 'Won by  party candidate ') {
-            result = 'Data is not available for this departement.';
-        }
-
-        // Display results
-        d3.select('#constituency').text(d);
-        d3.select('#result').text(result);
     }
 
     /**

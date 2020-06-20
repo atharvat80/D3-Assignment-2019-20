@@ -1,115 +1,119 @@
 <!DOCTYPE html>
-<html lang="en-gb">
+<html>
 
 <head>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<title>2017 French Presidential Election Results</title>
-	<!-- Bulma -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
-	<!-- D3.Js -->
-	<script src="https://d3js.org/d3.v4.min.js"></script>
-	<script src="https://d3js.org/d3-queue.v3.min.js"></script>
-	<script src="https://d3js.org/topojson.v2.min.js"></script>
-	<script src="script.js"></script>
-	<style>
-		html, body{
-			height:100%;
-		}
-		body, .full{
-			min-height: 100%;
-		}
-
-		.area {
-			stroke: white;
-			stroke-width: 0.5px;
-		}
-
-		.wide{
-			min-width: 100%;
-		}
-	</style>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>2017 French Presidential Election Results</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-queue.v3.min.js"></script>
+    <script src="https://d3js.org/topojson.v2.min.js"></script>
+    <script src="script.js"></script>
+    <style>
+        .area {
+            stroke: white;
+            stroke-width: 0.4;
+        }
+        div.tooltip {	
+            position: absolute;									
+            padding: 0.5rem;				
+            font-size: 0.8rem;
+            line-height: 0.8rem;		
+            background: black;	
+            border: 0px;		
+            border-radius: 8px;			
+            pointer-events: none;			
+        }
+    </style>
 </head>
 
 <body>
-	<nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-		<div class="navbar-start">
-			<span class="navbar-item title is-6">
-				2017 French Presidential Election Results
-			</span>
-		</div>
-		<div class="navbar-end">
-			<a class="navbar-item" href="./out/index.html">Documentation</a>
-			<a class="navbar-item" href="https://github.com/atharvat80/D3_Assignment">View on Github</a>
-		</div>
-	</nav>
+    <section class="hero is-dark is-fullheight">
+        <!-- Hero head: will stick at the top -->
+        <div class="hero-head">
+            <header class="navbar">
+                <div class="container">
+                    <div class="navbar-brand">
+                        <div class="navbar-item">
+                            <span class="title is-6">2017 French Presidential Election Results</span>
+                        </div>
+                        <span class="navbar-burger burger has-text-white" data-target="navbarMenuHeroC">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </span>
+                    </div>
+                    <div id="navbarMenuHeroC" class="navbar-menu">
+                        <div class="navbar-end">
+                            <span class="navbar-item" href="round1()">
+                                Round 1
+                            </span>
+                            <span class="navbar-item" href="javascript:round2()">
+                                Round 2
+                            </span>
+                            <a class="navbar-item" href="./out/index.html">
+                                Documentation
+                            </a>
+                            <a class="navbar-item" href="https://github.com/atharvat80/D3_Assignment">
+                                <span class="icon">
+                                    <i class="fab fa-github"></i>
+                                </span>
+                                <span>View</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+        </div>
 
-	<section class="section is-flex py-3" style="height: 48rem">
-		<div class="container is-marginless wide">
-			<div class="columns is-flex full">
-				<div class="column is-2">
-					<div class="tabs is-marginless">
-						<ul>
-							<li><a>Results</a></li>
-						</ul>
-					</div>
-					<div class="px-1 py-2">
-						<p id="constituency" class="title is-6"></p>
-        		<p id="result" class="subtitle is-6"></p> 
-					</div>   
-				</div>
-				<div class="column is-10">
-					<div class="tabs is-marginless">
-						<ul>
-							<li><a href="javascript:round1()">Round 1</a></li>
-							<li><a href="javascript:round2()">Round 2</a></li>
-						</ul>
-					</div>
-					<div id="map" class="is-flex full"></div>
-				</div>
-			</div>
-		</div>
-	</section>
+        <!-- Hero content: will be in the middle -->
+        <div class="hero-body has-background-white px-0 py-0" id="map"></div>
 
-	<footer class="footer px-4 py-4">
-		<div class="content has-text-centered">
-			<p>
-				Created by Atharva Tidke, released under MIT license. Based on a <a
-					href="https://bl.ocks.org/miguelrofer/ac1ec983fc8c1d0b8677259e6bb96198">visualisation</a> by <a
-					href="https://github.com/miguelrofer">Miguel Rofer</a>.
-				<br>Election data obtained from <a
-					href="https://en.wikipedia.org/wiki/2017_French_presidential_election#By_department">Wikipedia</a>, France
-				shapefile sourced from <a href="https://geo.nyu.edu/catalog/stanford-fs569ct0668">NYU Spatial Data
-					Repository</a>
-			</p>
-		</div>
-	</footer>
+        <!-- Hero footer: will stick at the bottom -->
+        <div class="hero-foot is-hidden-mobile">
+            <footer class="footer px-4 py-4">
+                <div class="content has-text-centered">
+                    <p class="has-text-grey">
+                        Created by Atharva Tidke, released under MIT license. Based on a <a
+                            href="https://bl.ocks.org/miguelrofer/ac1ec983fc8c1d0b8677259e6bb96198">visualisation</a> by
+                        <a href="https://github.com/miguelrofer">Miguel Rofer</a>.<br>
+                        Election data obtained from <a
+                            href="https://en.wikipedia.org/wiki/2017_French_presidential_election#By_department">Wikipedia</a>,
+                        France shapefile sourced from <a href="https://geo.nyu.edu/catalog/stanford-fs569ct0668">NYU
+                            Spatial Data Repository</a>
+                    </p>
+                </div>
+            </footer>
+        </div>
+    </section>
+    
+    <script>
+        france = new map();
 
-	<script>
-		france = new map();
+        function round1() {
+            document.getElementById('map').innerHTML = '';
+            france.init(
+                'france_2017/departements.json',
+                'france_2017/round1.csv',
+                'france_2017/colours.json',
+                'map', 'FRA_adm2-1', 'NAME_2', 'departement', 'candidate', 'party'
+            );
+        }
 
-		function round1() {
-			france.removePrevious('svg');
-			france.init(
-				'france_2017/departements.json',
-				'france_2017/round1.csv',
-				'france_2017/colours.json',
-				'map', 'FRA_adm2-1', 'NAME_2', 'departement', 'candidate', 'party'
-			);
-		}
+        function round2() {
+            document.getElementById('map').innerHTML = '';
+            france.init(
+                'france_2017/departements.json',
+                'france_2017/round2.csv',
+                'france_2017/colours.json',
+                'map', 'FRA_adm2-1', 'NAME_2', 'departement', 'candidate', 'party'
+            );
+        }
 
-		function round2() {
-			france.removePrevious('svg');
-			france.init(
-				'france_2017/departements.json',
-				'france_2017/round2.csv',
-				'france_2017/colours.json',
-				'map', 'FRA_adm2-1', 'NAME_2', 'departement', 'candidate', 'party'
-			);
-		}
-
-		round1();
-	</script>
+        round1();
+    </script>
 </body>
 
 </html>
