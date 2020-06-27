@@ -181,8 +181,8 @@ class map {
             .attr('d', this.path)
             .on('mouseover', (d) => {
                 this.div.style('opacity', 0.8)
-                    .style('left', (d3.event.pageX) + 'px')
-                    .style('top', (d3.event.pageY) + 'px');
+                    .style('left', (d3.event.pageX) + 20 + 'px')
+                    .style('top', (d3.event.pageY) - 10 + 'px');
                 let mpName = '';
                 for (var i = 0; i < this.electionData.length; i++) {
                     if (this.electionData[i][this.constituency] === d.properties[this.name2]) {
@@ -190,6 +190,11 @@ class map {
                     }
                 }
                 this.div.html(`<b>${d.properties[this.name2]}</b> <br> Won by <u>${mpName}</u>`);
+            })
+            .on('mousemove', (d) => {
+                this.div.style('opacity', 0.8)
+                    .style('left', (d3.event.pageX) + 20 + 'px')
+                    .style('top', (d3.event.pageY) - 10 + 'px');
             })
             .on('mouseout', () => {
                 this.div.style('opacity', 0);
